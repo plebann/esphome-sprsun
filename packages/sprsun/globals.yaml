@@ -1,0 +1,17 @@
+# SPRSUN Heat Pump Package - Global Variables
+# Part of the modular SPRSUN heat pump integration package
+
+# Global variables for tracking heat pump statistics
+# These variables are used by binary sensor automations and template sensors
+globals:
+  # Defrost cycle counter - incremented by defrost binary sensor automation
+  - id: number_defrost
+    type: int
+    restore_value: yes
+    initial_value: '0'
+    
+  # Compressor start counter - incremented by compressor binary sensor automation  
+  - id: number_compressor_starts
+    type: int
+    restore_value: yes
+    initial_value: '0'

@@ -1,0 +1,64 @@
+# SPRSUN Heat Pump Package - Binary Sensors
+# Part of the modular SPRSUN heat pump integration package
+
+binary_sensor:
+  # Heating status binary sensor
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating
+    id: ${sprsun_device_prefix}_heating
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0003
+    bitmask: 0x02
+
+  # Defrost status binary sensor with counter automation
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost
+    id: ${sprsun_device_prefix}_defrost
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0003
+    bitmask: 0x80
+    on_press:
+      then:
+        - lambda: 'id(number_defrost)++;'
+
+  # Compressor status binary sensor with counter automation
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Compressor
+    id: ${sprsun_device_prefix}_compressor
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0004
+    bitmask: 0x01
+    on_press:
+      then:
+        - lambda: 'id(number_compressor_starts)++;'
+
+  # Heating heater status binary sensor
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating heater
+    id: ${sprsun_device_prefix}_heating_heater
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0005
+    bitmask: 0x0020
+
+  # Chassis heater status binary sensor
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Chassis heater
+    id: ${sprsun_device_prefix}_chassis_heater
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0005
+    bitmask: 0x0001

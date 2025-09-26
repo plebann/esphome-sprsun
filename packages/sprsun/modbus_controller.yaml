@@ -1,0 +1,24 @@
+# SPRSUN Heat Pump Package - Modbus Controller
+# Part of the modular SPRSUN heat pump integration package
+
+# UART configuration for Modbus RTU communication
+uart:
+  id: uart_${sprsun_device_prefix}
+  rx_pin: ${sprsun_uart_rx_pin}
+  tx_pin: ${sprsun_uart_tx_pin}
+  baud_rate: ${sprsun_uart_baud}
+  stop_bits: ${sprsun_uart_stop_bits}
+
+# Modbus RTU bus configuration
+modbus:
+  send_wait_time: ${sprsun_modbus_send_wait}
+  uart_id: uart_${sprsun_device_prefix}
+  id: modbus_${sprsun_device_prefix}
+
+# Modbus controller for SPRSUN heat pump communication
+modbus_controller:
+  - id: ${sprsun_device_prefix}_pc
+    address: ${sprsun_modbus_address}
+    modbus_id: modbus_${sprsun_device_prefix}
+    update_interval: ${sprsun_update_interval}
+    setup_priority: ${sprsun_setup_priority}

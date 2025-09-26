@@ -1,0 +1,77 @@
+# SPRSUN Heat Pump - Basic ESP32 Example
+# This example shows a minimal setup for SPRSUN heat pump with a standard ESP32
+
+substitutions:
+  device_name: "heat-pump-controller"
+  friendly_name: "Heat Pump Controller"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: nodemcu-32s
+
+# WiFi configuration
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "${friendly_name} Fallback Hotspot"
+    password: !secret ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+  level: INFO
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+# Enable Web server
+web_server:
+  port: 80
+
+# Time component
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+packages:
+  # SPRSUN Heat Pump Integration Package
+  sprsun_package:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: [packages/sprsun/complete.yaml]
+    ref: main
+    refresh: 1d
+    vars:
+      sprsun_device_prefix: "sprsun"
+      sprsun_device_name: "SPRSUN Heat Pump"
+      sprsun_uart_rx_pin: "GPIO16"
+      sprsun_uart_tx_pin: "GPIO17"
+      sprsun_uart_baud: "19200"
+      sprsun_uart_stop_bits: "2"
+      sprsun_modbus_address: "1"
+      sprsun_modbus_send_wait: "200ms"
+      sprsun_update_interval: "5s"
+      sprsun_setup_priority: "-10"
+
+# Optional: Additional sensors or controls specific to your setup
+# sensor:
+#   - platform: wifi_signal
+#     name: "WiFi Signal"
+#     update_interval: 60s
+#
+# switch:
+#   - platform: restart
+#     name: "Restart ESP32"
