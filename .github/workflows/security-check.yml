@@ -1,0 +1,66 @@
+name: Security Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Check commit author
+      run: |
+        # Get the author of the latest commit
+        COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an')
+        COMMIT_EMAIL=$(git log -1 --pretty=format:'%ae')
+        
+        echo "Commit author: $COMMIT_AUTHOR"
+        echo "Commit email: $COMMIT_EMAIL"
+        
+        # Check if the commit is from the authorized user
+        if [ "$COMMIT_AUTHOR" != "plebann" ] && [ "$COMMIT_EMAIL" != "plebann@users.noreply.github.com" ]; then
+          # Allow GitHub bots for automation (like dependabot, copilot, etc.)
+          if [[ "$COMMIT_EMAIL" =~ .*noreply\.github\.com$ ]] && [[ "$COMMIT_EMAIL" =~ ^[0-9]+\+ ]]; then
+            echo "Allowing GitHub bot commit: $COMMIT_EMAIL"
+            exit 0
+          fi
+          
+          # Allow commits from the repository owner's verified email
+          if [ "$COMMIT_EMAIL" = "$(echo '${{ github.repository_owner }}@users.noreply.github.com')" ]; then
+            echo "Allowing commit from repository owner"
+            exit 0
+          fi
+          
+          echo "❌ Unauthorized commit detected!"
+          echo "Only the repository owner (plebann) is authorized to commit directly."
+          echo "Please submit changes via pull request for review."
+          exit 1
+        fi
+        
+        echo "✅ Commit authorized"
+    
+    - name: Verify branch protection
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        echo "⚠️  Direct push to main branch detected!"
+        echo "While this commit is authorized, consider using pull requests for better tracking."
+        
+    - name: Security scan
+      run: |
+        echo "🔍 Running basic security checks..."
+        
+        # Check for common secrets patterns
+        if grep -r -i "password\|secret\|key\|token" . --exclude-dir=.git --exclude="*.yml" --exclude="*.md" | grep -v "# No secrets found"; then
+          echo "⚠️  Potential secrets found in code. Please review:"
+          grep -r -i "password\|secret\|key\|token" . --exclude-dir=.git --exclude="*.yml" --exclude="*.md" || true
+        else
+          echo "✅ No obvious secrets detected"
+        fi
+        
+        echo "🔒 Security check completed"

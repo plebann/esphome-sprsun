@@ -1,0 +1,97 @@
+name: Repository Access Control
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+jobs:
+  access-control:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Validate pull request author
+      run: |
+        PR_AUTHOR="${{ github.actor }}"
+        REPO_OWNER="${{ github.repository_owner }}"
+        
+        echo "PR Author: $PR_AUTHOR"
+        echo "Repository Owner: $REPO_OWNER"
+        
+        # Allow the repository owner and GitHub bots
+        if [ "$PR_AUTHOR" = "$REPO_OWNER" ] || [ "$PR_AUTHOR" = "dependabot[bot]" ] || [ "$PR_AUTHOR" = "github-actions[bot]" ] || [ "$PR_AUTHOR" = "Copilot" ]; then
+          echo "✅ Pull request from authorized user/bot: $PR_AUTHOR"
+        else
+          echo "⚠️  Pull request from external contributor: $PR_AUTHOR"
+          echo "This PR requires manual review and approval from the repository owner."
+          echo "All changes will be thoroughly reviewed before merging."
+        fi
+    
+    - name: Check for sensitive file changes
+      run: |
+        echo "🔍 Checking for changes to sensitive files..."
+        
+        # Get list of changed files
+        CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+        
+        echo "Changed files:"
+        echo "$CHANGED_FILES"
+        
+        # Check for changes to critical files
+        SENSITIVE_PATTERNS=(
+          ".github/"
+          "CODEOWNERS"
+          ".gitignore"
+          "*.yml"
+          "*.yaml"
+        )
+        
+        SENSITIVE_CHANGED=false
+        
+        for pattern in "${SENSITIVE_PATTERNS[@]}"; do
+          if echo "$CHANGED_FILES" | grep -q "$pattern"; then
+            echo "⚠️  Sensitive file pattern '$pattern' detected in changes"
+            SENSITIVE_CHANGED=true
+          fi
+        done
+        
+        if [ "$SENSITIVE_CHANGED" = true ]; then
+          echo "🔒 This PR modifies sensitive files and requires thorough review"
+          echo "Please ensure all changes are necessary and secure"
+        else
+          echo "✅ No sensitive files modified"
+        fi
+    
+    - name: Comment on PR if needed
+      if: github.actor != github.repository_owner && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' && github.actor != 'Copilot'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const message = `
+          ## 🔒 External Contribution Security Notice
+          
+          Thank you for your contribution! This repository has strict security controls in place.
+          
+          **Security Review Process:**
+          - All external contributions require manual review by the repository owner (@plebann)
+          - Changes will be thoroughly tested before merging
+          - Security and functionality will be validated
+          
+          **What happens next:**
+          - The repository owner will review your changes
+          - You may receive feedback or requests for modifications
+          - Once approved, your contribution will be merged
+          
+          Thank you for understanding our security measures!
+          `;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: message
+          });

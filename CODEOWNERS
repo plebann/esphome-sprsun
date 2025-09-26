@@ -1,0 +1,12 @@
+# Global code ownership
+# All files require approval from the repository owner
+* @plebann
+
+# Critical security files require explicit approval
+/.github/ @plebann
+/CODEOWNERS @plebann
+/.gitignore @plebann
+
+# Documentation can be reviewed by owner
+/*.md @plebann
+/docs/ @plebann
