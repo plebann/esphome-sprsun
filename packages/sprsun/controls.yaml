@@ -1,0 +1,414 @@
+# SPRSUN Heat Pump Package - Controls
+# Part of the modular SPRSUN heat pump integration package
+
+number:
+  # Hot water temperature settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Hot water set temp
+    id: ${sprsun_device_prefix}_hot_water_set_temp
+    register_type: holding
+    address: 0x0100
+    min_value: 5
+    max_value: 80
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Hot water max temp
+    id: ${sprsun_device_prefix}_hot_water_max_temp
+    register_type: holding
+    address: 0x0101
+    min_value: 10
+    max_value: 80
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Hot water min temp
+    id: ${sprsun_device_prefix}_hot_water_min_temp
+    register_type: holding
+    address: 0x0102
+    min_value: 5
+    max_value: 75
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # Heating temperature settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating set temp
+    id: ${sprsun_device_prefix}_heating_set_temp
+    register_type: holding
+    address: 0x0103
+    min_value: 5
+    max_value: 50
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating max temp
+    id: ${sprsun_device_prefix}_heating_max_temp
+    register_type: holding
+    address: 0x0104
+    min_value: 10
+    max_value: 50
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating min temp
+    id: ${sprsun_device_prefix}_heating_min_temp
+    register_type: holding
+    address: 0x0105
+    min_value: 5
+    max_value: 45
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # Cooling temperature settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling set temp
+    id: ${sprsun_device_prefix}_cooling_set_temp
+    register_type: holding
+    address: 0x0106
+    min_value: 5
+    max_value: 25
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling max temp
+    id: ${sprsun_device_prefix}_cooling_max_temp
+    register_type: holding
+    address: 0x0107
+    min_value: 10
+    max_value: 25
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling min temp
+    id: ${sprsun_device_prefix}_cooling_min_temp
+    register_type: holding
+    address: 0x0108
+    min_value: 5
+    max_value: 20
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # Temperature differentials
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Hot water diff
+    id: ${sprsun_device_prefix}_hot_water_diff
+    register_type: holding
+    address: 0x0109
+    min_value: 1
+    max_value: 30
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating diff
+    id: ${sprsun_device_prefix}_heating_diff
+    register_type: holding
+    address: 0x010A
+    min_value: 1
+    max_value: 10
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling diff
+    id: ${sprsun_device_prefix}_cooling_diff
+    register_type: holding
+    address: 0x010B
+    min_value: 1
+    max_value: 10
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # System control parameters
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antilegionella cycle
+    id: ${sprsun_device_prefix}_antilegionella_cycle
+    register_type: holding
+    address: 0x010C
+    min_value: 0
+    max_value: 100
+    step: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Runtime for heating element step1
+    id: ${sprsun_device_prefix}_heating_element_step1_runtime
+    register_type: holding
+    address: 0x010D
+    min_value: 0
+    max_value: 100
+    step: 1
+    unit_of_measurement: "min"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Runtime for heating element step2
+    id: ${sprsun_device_prefix}_heating_element_step2_runtime
+    register_type: holding
+    address: 0x010E
+    min_value: 0
+    max_value: 100
+    step: 1
+    unit_of_measurement: "min"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Step diff for heating element
+    id: ${sprsun_device_prefix}_step_diff_heating_element
+    register_type: holding
+    address: 0x010F
+    min_value: 1
+    max_value: 50
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # Antifreeze protection settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antifreeze temp
+    id: ${sprsun_device_prefix}_antifreeze_temp
+    register_type: holding
+    address: 0x0110
+    min_value: -30
+    max_value: 15
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Temp rise for antifreeze stop
+    id: ${sprsun_device_prefix}_temp_rise_antifreeze_stop
+    register_type: holding
+    address: 0x0111
+    min_value: 1
+    max_value: 20
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # Additional temperature protections
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Max outlet water temp for heating
+    id: ${sprsun_device_prefix}_max_outlet_heating_temp
+    register_type: holding
+    address: 0x0112
+    min_value: 15
+    max_value: 70
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Min outlet water temp for cooling
+    id: ${sprsun_device_prefix}_min_outlet_cooling_temp
+    register_type: holding
+    address: 0x0113
+    min_value: 1
+    max_value: 25
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  # Compressor control parameters
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Compressor start temp diff
+    id: ${sprsun_device_prefix}_comp_start_temp_diff
+    register_type: holding
+    address: 0x0114
+    min_value: 1
+    max_value: 20
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Min frequency for compressor
+    id: ${sprsun_device_prefix}_min_comp_frequency
+    register_type: holding
+    address: 0x0115
+    min_value: 30
+    max_value: 87
+    step: 1
+    unit_of_measurement: "Hz"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Max frequency for compressor
+    id: ${sprsun_device_prefix}_max_comp_frequency
+    register_type: holding
+    address: 0x0116
+    min_value: 30
+    max_value: 87
+    step: 1
+    unit_of_measurement: "Hz"
+
+  # Defrost control parameters
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost start temp
+    id: ${sprsun_device_prefix}_defrost_start_temp
+    register_type: holding
+    address: 0x0117
+    min_value: -25
+    max_value: 5
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost back temp
+    id: ${sprsun_device_prefix}_defrost_back_temp
+    register_type: holding
+    address: 0x0118
+    min_value: 1
+    max_value: 25
+    step: 1
+    multiply: 10
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost max time
+    id: ${sprsun_device_prefix}_defrost_max_time
+    register_type: holding
+    address: 0x0119
+    min_value: 2
+    max_value: 12
+    step: 1
+    unit_of_measurement: "min"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost interval time
+    id: ${sprsun_device_prefix}_defrost_interval_time
+    register_type: holding
+    address: 0x011A
+    min_value: 30
+    max_value: 120
+    step: 1
+    unit_of_measurement: "min"
+
+  # Water flow and pump settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water flow alarm time
+    id: ${sprsun_device_prefix}_water_flow_alarm_time
+    register_type: holding
+    address: 0x011B
+    min_value: 10
+    max_value: 120
+    step: 1
+    unit_of_measurement: "s"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Pump off delay time
+    id: ${sprsun_device_prefix}_pump_off_delay_time
+    register_type: holding
+    address: 0x011C
+    min_value: 10
+    max_value: 600
+    step: 1
+    unit_of_measurement: "s"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Pump on advance time
+    id: ${sprsun_device_prefix}_pump_on_advance_time
+    register_type: holding
+    address: 0x011D
+    min_value: 10
+    max_value: 300
+    step: 1
+    unit_of_measurement: "s"
+
+select:
+  # Operation mode selection
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} System mode
+    id: ${sprsun_device_prefix}_system_mode
+    address: 0x0080
+    optionsmap:
+      "Off": 0
+      "Auto": 1
+      "Heating": 2
+      "Cooling": 3
+      "Hot Water": 4
+      "Heating + Hot Water": 5
+      "Cooling + Hot Water": 6
+
+  # Fan speed selection
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Fan speed
+    id: ${sprsun_device_prefix}_fan_speed
+    address: 0x0081
+    optionsmap:
+      "Auto": 0
+      "Low": 1
+      "High": 2
+
+switch:
+  # Main system power switch
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Power switch
+    id: ${sprsun_device_prefix}_power_switch
+    register_type: coil
+    address: 0x0001
+
+  # Emergency stop switch
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Emergency stop
+    id: ${sprsun_device_prefix}_emergency_stop
+    register_type: coil
+    address: 0x0002
+
+  # Manual defrost trigger
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Manual defrost
+    id: ${sprsun_device_prefix}_manual_defrost
+    register_type: coil
+    address: 0x0003

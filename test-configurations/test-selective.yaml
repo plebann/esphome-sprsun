@@ -1,0 +1,48 @@
+# Test Configuration - Selective Components Method
+# This validates loading only specific package components
+
+substitutions:
+  device_name: "test-selective"
+  friendly_name: "Test Selective"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: nodemcu-32s
+
+logger:
+  level: INFO
+  baud_rate: 0
+
+packages:
+  # Load core Modbus functionality
+  sprsun_modbus:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: 
+      - packages/sprsun/modbus_controller.yaml
+      - packages/sprsun/globals.yaml
+    ref: main
+    vars:
+      sprsun_device_prefix: "sel_hp"
+      sprsun_uart_rx_pin: "GPIO16"
+      sprsun_uart_tx_pin: "GPIO17"
+      sprsun_uart_baud: "19200"
+      sprsun_uart_stop_bits: "2"
+      sprsun_modbus_address: "1"
+      sprsun_modbus_send_wait: "200ms"
+      sprsun_setup_priority: "-10"
+
+  # Load only monitoring sensors (no controls)
+  sprsun_monitoring:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: 
+      - packages/sprsun/sensors.yaml
+      - packages/sprsun/binary_sensors.yaml
+      - packages/sprsun/text_sensors.yaml
+    ref: main
+    vars:
+      sprsun_device_prefix: "sel_hp"
+      sprsun_device_name: "Selective Heat Pump"
+      sprsun_update_interval: "10s"

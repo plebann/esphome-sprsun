@@ -1,0 +1,302 @@
+# SPRSUN Heat Pump Package - Text Sensors
+# Part of the modular SPRSUN heat pump integration package
+
+text_sensor:
+  # Switching input symbol status parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Switching input symbol
+    id: ${sprsun_device_prefix}_switching_input_symbol
+    register_type: holding
+    address: 0x0002
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "A/C Linkage switch, ";
+      if ((data[idx] & 0x0002) != 0) z += "Linkage switch, ";
+      if ((data[idx] & 0x0004) != 0) z += "Heating linkage, ";
+      if ((data[idx] & 0x0008) != 0) z += "Cooling linkage, ";
+      if ((data[idx] & 0x0010) != 0) z += "Flow Switch, ";
+      if ((data[idx] & 0x0020) != 0) z += "High pressure switch, ";
+      if ((data[idx] & 0x0040) != 0) z += "Phase sequence detection, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Working status mark parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Working status mark
+    id: ${sprsun_device_prefix}_working_status_mark
+    register_type: holding
+    address: 0x0003
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Hot water demand, ";
+      if ((data[idx] & 0x0002) != 0) z += "Heating demand, ";
+      if ((data[idx] & 0x0010) != 0) z += "Antilegionella on, ";
+      if ((data[idx] & 0x0020) != 0) z += "Cooling demand, ";
+      if ((data[idx] & 0x0040) != 0) z += "Alarm downtime, ";
+      if ((data[idx] & 0x0080) != 0) z += "Defrost, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Output symbol 1 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Output symbol 1
+    id: ${sprsun_device_prefix}_output_symbol_1
+    register_type: holding
+    address: 0x0004
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Compressor, ";
+      if ((data[idx] & 0x0002) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Fan, ";
+      if ((data[idx] & 0x0040) != 0) z += "4-way valve, ";
+      if ((data[idx] & 0x0080) == 0) z += "Low fan speed, ";
+      if ((data[idx] & 0x0080) == 128) z += "High fan speed, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Output symbol 2 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Output symbol 2
+    id: ${sprsun_device_prefix}_output_symbol_2
+    register_type: holding
+    address: 0x0005
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Chasis heater, ";
+      if ((data[idx] & 0x0002) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Heating heater, ";
+      if ((data[idx] & 0x0040) != 0) z += "Three-way valve, ";
+      if ((data[idx] & 0x0080) != 0) z += "Hotwater heater, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Output symbol 3 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Output symbol 3
+    id: ${sprsun_device_prefix}_output_symbol_3
+    register_type: holding
+    address: 0x0006
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "A/C PUMP, ";
+      if ((data[idx] & 0x0002) != 0) z += "Crank heater, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Assistant solenoid valve, ";
+      if ((data[idx] & 0x0040) != 0) z += "Pump, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 1 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 1
+    id: ${sprsun_device_prefix}_failure_symbol_1
+    register_type: holding
+    address: 0x0007
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Hotwater temp, ";
+      if ((data[idx] & 0x0002) != 0) z += "Ambi temp, ";
+      if ((data[idx] & 0x0004) != 0) z += "Coil temp, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Outlet temp, ";
+      if ((data[idx] & 0x0020) != 0) z += "High pressure sensor failure, ";
+      if ((data[idx] & 0x0040) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0080) != 0) z += "Phase sequence, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 2 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 2
+    id: ${sprsun_device_prefix}_failure_symbol_2
+    register_type: holding
+    address: 0x0008
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Water flow failure, ";
+      if ((data[idx] & 0x0002) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0004) != 0) z += "High protection of heating water outlet, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0040) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 3 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 3
+    id: ${sprsun_device_prefix}_failure_symbol_3
+    register_type: holding
+    address: 0x0009
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0002) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0040) != 0) z += "Outlet gas temp failure, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 4 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 4
+    id: ${sprsun_device_prefix}_failure_symbol_4
+    register_type: holding
+    address: 0x000A
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Water inlet temp failure, ";
+      if ((data[idx] & 0x0002) != 0) z += "Exhaust temperature is too high, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Low protection of cooling water outlet, ";
+      if ((data[idx] & 0x0040) != 0) z += "Inlet gas temp failure, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 5 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 5
+    id: ${sprsun_device_prefix}_failure_symbol_5
+    register_type: holding
+    address: 0x000B
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Low pressure protection, ";
+      if ((data[idx] & 0x0002) != 0) z += "High pressure protection, ";
+      if ((data[idx] & 0x0004) != 0) z += "Coil temperature is too high, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0020) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0040) != 0) z += "High pressure sensor failure, ";
+      if ((data[idx] & 0x0080) != 0) z += "Low pressure sensor failure, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 6 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 6
+    id: ${sprsun_device_prefix}_failure_symbol_6
+    register_type: holding
+    address: 0x000C
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0002) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Sec antifreeze, ";
+      if ((data[idx] & 0x0020) != 0) z += "One antifreeze, ";
+      if ((data[idx] & 0x0040) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};
+
+  # Failure symbol 7 parsing
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure symbol 7
+    id: ${sprsun_device_prefix}_failure_symbol_7
+    register_type: holding
+    address: 0x000D
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      std::string z = "";
+      int idx = item->offset+1;
+      if ((data[idx] & 0x0001) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0002) != 0) z += "Ambient temperature is too low, ";
+      if ((data[idx] & 0x0004) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0008) != 0) z += "Invalid, ";
+      if ((data[idx] & 0x0010) != 0) z += "Frequency conversion module is faulty  ";
+      if ((data[idx] & 0x0020) != 0) z += "2# DC fan failure, ";
+      if ((data[idx] & 0x0040) != 0) z += "1# DC fan failure, ";
+      if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
+      if(z.length() > 0){
+        z.erase(z.length() - 2);
+      }
+      return {z};

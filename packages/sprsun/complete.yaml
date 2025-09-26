@@ -1,0 +1,82 @@
+# SPRSUN Heat Pump Package - Complete Template
+# Master package that includes all SPRSUN components
+# 
+# Usage with ESPHome Git integration:
+# packages:
+#   sprsun_package:
+#     url: https://github.com/plebann/sprsun-esphome-package
+#     files: [packages/sprsun/complete.yaml]
+#     ref: main
+#     refresh: 1d
+#     vars:
+#       sprsun_device_prefix: "sprsun"
+#       sprsun_device_name: "SPRSUN Heat Pump"
+#       sprsun_uart_rx_pin: "GPIO14"
+#       sprsun_uart_tx_pin: "GPIO15"
+#       sprsun_uart_baud: "19200"
+#       sprsun_uart_stop_bits: "2"
+#       sprsun_modbus_address: "1"
+#       sprsun_modbus_send_wait: "200ms"
+#       sprsun_update_interval: "5s"
+#       sprsun_setup_priority: "-10"
+
+# Core infrastructure - UART and Modbus controller
+packages:
+  sprsun_globals: !include
+    file: globals.yaml
+    vars:
+      sprsun_device_prefix: ${sprsun_device_prefix}
+
+  sprsun_modbus: !include
+    file: modbus_controller.yaml
+    vars:
+      sprsun_device_prefix: ${sprsun_device_prefix}
+      sprsun_uart_rx_pin: ${sprsun_uart_rx_pin}
+      sprsun_uart_tx_pin: ${sprsun_uart_tx_pin}
+      sprsun_uart_baud: ${sprsun_uart_baud}
+      sprsun_uart_stop_bits: ${sprsun_uart_stop_bits}
+      sprsun_modbus_address: ${sprsun_modbus_address}
+      sprsun_modbus_send_wait: ${sprsun_modbus_send_wait}
+      sprsun_setup_priority: ${sprsun_setup_priority}
+
+  # Sensor components
+  sprsun_binary_sensors: !include
+    file: binary_sensors.yaml
+    vars:
+      sprsun_device_prefix: ${sprsun_device_prefix}
+      sprsun_device_name: ${sprsun_device_name}
+      sprsun_update_interval: ${sprsun_update_interval}
+
+  sprsun_text_sensors: !include
+    file: text_sensors.yaml
+    vars:
+      sprsun_device_prefix: ${sprsun_device_prefix}
+      sprsun_device_name: ${sprsun_device_name}
+      sprsun_update_interval: ${sprsun_update_interval}
+
+  sprsun_sensors: !include
+    file: sensors.yaml
+    vars:
+      sprsun_device_prefix: ${sprsun_device_prefix}
+      sprsun_device_name: ${sprsun_device_name}
+      sprsun_update_interval: ${sprsun_update_interval}
+
+  # Control components
+  sprsun_controls: !include
+    file: controls.yaml
+    vars:
+      sprsun_device_prefix: ${sprsun_device_prefix}
+      sprsun_device_name: ${sprsun_device_name}
+
+# Optional additional configuration
+# Uncomment and modify as needed for your specific installation
+#
+# interval:
+#   - interval: 30s
+#     then:
+#       - logger.log: "SPRSUN Heat Pump monitoring active"
+#
+# on_boot:
+#   priority: 200
+#   then:
+#     - logger.log: "SPRSUN Heat Pump package initialized"

@@ -1,0 +1,216 @@
+name: ESPHome Package Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-package:
+    runs-on: ubuntu-latest
+    name: Validate SPRSUN Package
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install ESPHome
+      run: |
+        pip install esphome
+
+    - name: Validate package YAML files
+      run: |
+        echo "Validating package YAML syntax..."
+        for yaml_file in packages/sprsun/*.yaml; do
+          echo "Checking $yaml_file"
+          python -c "
+        import yaml
+        import sys
+        try:
+            with open('$yaml_file', 'r') as f:
+                yaml.safe_load(f)
+            print('✓ $yaml_file is valid YAML')
+        except Exception as e:
+            print('✗ $yaml_file has YAML syntax error:', e)
+            sys.exit(1)
+        "
+        done
+
+    - name: Create test secrets file
+      run: |
+        mkdir -p test_config
+        cat > test_config/secrets.yaml << 'EOF'
+        wifi_ssid: "test_wifi"
+        wifi_password: "test_password"
+        api_encryption_key: "test_key_32_characters_long_1234"
+        ota_password: "test_ota_password"
+        ap_password: "test_ap_password"
+        web_server_username: "admin"
+        web_server_password: "admin123"
+        mqtt_broker: "test.mqtt.broker"
+        mqtt_username: "test_user"
+        mqtt_password: "test_pass"
+        EOF
+
+    - name: Validate example configurations
+      run: |
+        echo "Validating example configurations..."
+        cd test_config
+        
+        # Test basic ESP32 example
+        echo "Testing basic ESP32 example..."
+        cp ../examples/basic-esp32.yaml ./test-basic.yaml
+        esphome config test-basic.yaml
+        
+        echo "✓ Basic ESP32 example validates successfully"
+
+  lint-yaml:
+    runs-on: ubuntu-latest
+    name: YAML Lint
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install yamllint
+      run: pip install yamllint
+
+    - name: Create yamllint config
+      run: |
+        cat > .yamllint.yml << 'EOF'
+        extends: default
+        rules:
+          line-length:
+            max: 120
+          indentation:
+            spaces: 2
+          comments:
+            min-spaces-from-content: 1
+          document-start: disable
+          truthy:
+            allowed-values: ['true', 'false', 'on', 'off']
+        EOF
+
+    - name: Lint package YAML files
+      run: |
+        yamllint packages/sprsun/*.yaml
+
+    - name: Lint example YAML files
+      run: |
+        yamllint examples/*.yaml
+
+  validate-documentation:
+    runs-on: ubuntu-latest
+    name: Validate Documentation
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check README links
+      run: |
+        echo "Checking README.md for broken links..."
+        # Basic link validation - check that referenced files exist
+        if grep -q "examples/" README.md; then
+          for example in examples/*.yaml; do
+            if [ -f "$example" ]; then
+              echo "✓ $example exists"
+            else
+              echo "✗ $example referenced but not found"
+              exit 1
+            fi
+          done
+        fi
+
+    - name: Validate package documentation
+      run: |
+        echo "Checking package documentation..."
+        if [ -f "packages/sprsun/README.md" ]; then
+          echo "✓ Package README.md exists"
+        else
+          echo "✗ Package README.md missing"
+          exit 1
+        fi
+
+    - name: Check migration guide
+      run: |
+        if [ -f "MIGRATION.md" ]; then
+          echo "✓ Migration guide exists"
+        else
+          echo "✗ Migration guide missing"
+          exit 1
+        fi
+
+  check-package-structure:
+    runs-on: ubuntu-latest
+    name: Validate Package Structure
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check required files
+      run: |
+        echo "Checking package structure..."
+        
+        required_files=(
+          "packages/sprsun/complete.yaml"
+          "packages/sprsun/binary_sensors.yaml" 
+          "packages/sprsun/sensors.yaml"
+          "packages/sprsun/text_sensors.yaml"
+          "packages/sprsun/controls.yaml"
+          "packages/sprsun/globals.yaml"
+          "packages/sprsun/modbus_controller.yaml"
+          "packages/sprsun/README.md"
+          "README.md"
+          "LICENSE"
+          "MIGRATION.md"
+        )
+        
+        for file in "${required_files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ $file exists"
+          else
+            echo "✗ $file missing"
+            exit 1
+          fi
+        done
+
+    - name: Check example files
+      run: |
+        echo "Checking example files..."
+        
+        example_files=(
+          "examples/basic-esp32.yaml"
+          "examples/boneio-integration.yaml"
+          "examples/advanced-features.yaml"
+          "examples/selective-components.yaml"
+        )
+        
+        for file in "${example_files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✓ $file exists"
+          else
+            echo "✗ $file missing"
+            exit 1
+          fi
+        done

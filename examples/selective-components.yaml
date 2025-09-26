@@ -1,0 +1,87 @@
+# SPRSUN Heat Pump - Selective Components Example
+# This example shows how to include only specific components instead of the complete package
+
+substitutions:
+  device_name: "heat-pump-selective"
+  friendly_name: "Heat Pump Selective Controller"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: nodemcu-32s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+logger:
+  level: INFO
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+packages:
+  # Load only specific SPRSUN components
+  sprsun_modbus:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: [packages/sprsun/modbus_controller.yaml]
+    ref: main
+    vars:
+      sprsun_device_prefix: "hp"
+      sprsun_uart_rx_pin: "GPIO16"
+      sprsun_uart_tx_pin: "GPIO17"
+      sprsun_uart_baud: "19200"
+      sprsun_uart_stop_bits: "2"
+      sprsun_modbus_address: "1"
+      sprsun_modbus_send_wait: "200ms"
+      sprsun_setup_priority: "-10"
+
+  sprsun_globals:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: [packages/sprsun/globals.yaml]
+    ref: main
+    vars:
+      sprsun_device_prefix: "hp"
+
+  # Load only sensors and binary sensors (no controls)
+  sprsun_sensors:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: 
+      - packages/sprsun/sensors.yaml
+      - packages/sprsun/binary_sensors.yaml
+    ref: main
+    vars:
+      sprsun_device_prefix: "hp"
+      sprsun_device_name: "Heat Pump"
+      sprsun_update_interval: "10s"
+
+  # Optionally add text sensors for status information
+  sprsun_status:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: [packages/sprsun/text_sensors.yaml]
+    ref: main
+    vars:
+      sprsun_device_prefix: "hp"
+      sprsun_device_name: "Heat Pump"
+      sprsun_update_interval: "30s"  # Status updates less frequently
+
+# This configuration provides:
+# - Complete Modbus communication setup
+# - All temperature, pressure, and power sensors
+# - Binary sensors for heating/cooling status
+# - Text sensors for system status
+# - BUT EXCLUDES: Control components (no switches/selects for changing settings)
+#
+# This is useful for monitoring-only installations where you don't want
+# to risk changing heat pump settings through ESPHome

@@ -1,0 +1,5 @@
+# CODEOWNERS file for esphome-sprsun
+# This file defines code ownership for automatic review requests
+
+# Global ownership - all files default to repository owner
+* @plebann

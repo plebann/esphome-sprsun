@@ -1,0 +1,140 @@
+# SPRSUN Heat Pump - Advanced Features Example
+# This example shows advanced configuration options and full variable customization
+
+substitutions:
+  device_name: "heat-pump-advanced"
+  friendly_name: "Advanced Heat Pump Controller"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  # Custom boot action using heat pump status
+  on_boot:
+    priority: -100.0
+    then:
+      - logger.log: "Heat pump controller started"
+      - if:
+          condition:
+            binary_sensor.is_on: hp_system_defrost
+          then:
+            - logger.log: "System in defrost mode on startup"
+
+esp32:
+  board: esp32dev
+
+# WiFi with static IP
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.1.100
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+
+# Enable logging with custom settings
+logger:
+  level: DEBUG
+  baud_rate: 0  # Disable logging to UART since we use it for Modbus
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+# Enable OTA updates
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+# Enable Web server with authentication
+web_server:
+  port: 80
+  auth:
+    username: !secret web_server_username
+    password: !secret web_server_password
+
+# Time component with timezone
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+    timezone: Europe/Warsaw
+
+packages:
+  # SPRSUN Heat Pump Integration Package with custom variables
+  sprsun_package:
+    url: https://github.com/plebann/sprsun-esphome-package
+    files: [packages/sprsun/complete.yaml]
+    ref: main
+    refresh: 12h  # Check for updates twice daily
+    vars:
+      # Custom naming convention
+      sprsun_device_prefix: "hp_system"
+      sprsun_device_name: "Advanced Heat Pump"
+      
+      # UART configuration for different pins
+      sprsun_uart_rx_pin: "GPIO32"
+      sprsun_uart_tx_pin: "GPIO33"
+      sprsun_uart_baud: "19200"
+      sprsun_uart_stop_bits: "2"
+      
+      # Modbus configuration
+      sprsun_modbus_address: "1"
+      sprsun_modbus_send_wait: "150ms"  # Faster communication
+      
+      # Update intervals
+      sprsun_update_interval: "3s"  # Faster updates
+      sprsun_setup_priority: "-10"
+
+# Additional sensors for monitoring
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal Strength"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "Uptime"
+    update_interval: 60s
+
+  - platform: internal_temperature
+    name: "ESP32 Temperature"
+
+# System controls
+switch:
+  - platform: restart
+    name: "Restart Controller"
+
+button:
+  - platform: safe_mode
+    name: "Safe Mode Boot"
+
+# Status LED
+status_led:
+  pin:
+    number: GPIO2
+    inverted: true
+
+# Interval for custom actions
+interval:
+  - interval: 5min
+    then:
+      - logger.log: "System status check - Heat pump monitoring active"
+      
+# Custom automations using heat pump data
+binary_sensor:
+  - platform: template
+    name: "Heat Pump System Alert"
+    lambda: |-
+      // Custom logic combining multiple heat pump sensors
+      if (id(hp_system_heating).state || id(hp_system_defrost).state) {
+        return true;
+      }
+      return false;
+    on_press:
+      - logger.log: "Heat pump system activity detected"
+
+# MQTT integration (optional)
+# mqtt:
+#   broker: !secret mqtt_broker
+#   username: !secret mqtt_username
+#   password: !secret mqtt_password
+#   topic_prefix: heat_pump/advanced_controller
