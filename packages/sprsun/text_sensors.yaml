@@ -19,7 +19,7 @@ text_sensor:
       if ((data[idx] & 0x0004) != 0) z += "Heating linkage, ";
       if ((data[idx] & 0x0008) != 0) z += "Cooling linkage, ";
       if ((data[idx] & 0x0010) != 0) z += "Flow Switch, ";
-      if ((data[idx] & 0x0020) != 0) z += "High pessure switch, ";
+      if ((data[idx] & 0x0020) != 0) z += "High pressure switch, ";
       if ((data[idx] & 0x0040) != 0) z += "Phase sequence detection, ";
       if ((data[idx] & 0x0080) != 0) z += "Invalid, ";
       if(z.length() > 0){
