@@ -2,327 +2,472 @@
 # Part of the modular SPRSUN heat pump integration package
 
 sensor:
-  # Basic temperature and status sensors
+  # Controller and Display version sensors
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Hot water temp
-    id: ${sprsun_device_prefix}_hot_water_temp
-    register_type: holding
-    address: 0x0020
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 0
-    filters:
-      - multiply: 0.1
-      - round: 1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Outlet water temp
-    id: ${sprsun_device_prefix}_outlet_water_temp
-    register_type: holding
-    address: 0x0021
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Inlet water temp
-    id: ${sprsun_device_prefix}_inlet_water_temp
-    register_type: holding
-    address: 0x0022
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Ambient temp
-    id: ${sprsun_device_prefix}_ambient_temp
-    register_type: holding
-    address: 0x0023
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Coil temp
-    id: ${sprsun_device_prefix}_coil_temp
-    register_type: holding
-    address: 0x0024
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Pressure sensors
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Low pressure
-    id: ${sprsun_device_prefix}_low_pressure
-    register_type: holding
-    address: 0x0025
-    value_type: S_WORD
-    unit_of_measurement: "bar"
-    accuracy_decimals: 2
-    filters:
-      - multiply: 0.01
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} High pressure
-    id: ${sprsun_device_prefix}_high_pressure
-    register_type: holding
-    address: 0x0026
-    value_type: S_WORD
-    unit_of_measurement: "bar"
-    accuracy_decimals: 2
-    filters:
-      - multiply: 0.01
-
-  # Exhaust temperature sensors
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Exhaust temp
-    id: ${sprsun_device_prefix}_exhaust_temp
-    register_type: holding
-    address: 0x0027
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Machine running status sensors
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Machine running status 1
-    id: ${sprsun_device_prefix}_machine_status_1
-    register_type: holding
-    address: 0x0028
-    value_type: U_WORD
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Machine running status 2
-    id: ${sprsun_device_prefix}_machine_status_2
-    register_type: holding
-    address: 0x0029
-    value_type: U_WORD
-
-  # Additional gas temperature sensors
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Gas inlet temp
-    id: ${sprsun_device_prefix}_gas_inlet_temp
-    register_type: holding
-    address: 0x002A
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Gas outlet temp
-    id: ${sprsun_device_prefix}_gas_outlet_temp
-    register_type: holding
-    address: 0x002B
-    value_type: S_WORD
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Additional status sensors
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Machine running status 3
-    id: ${sprsun_device_prefix}_machine_status_3
+    name: ${sprsun_device_name} Controller version
+    id: ${sprsun_device_prefix}_controller_version
     register_type: holding
     address: 0x002C
     value_type: U_WORD
-
+    entity_category: diagnostic
+    icon: mdi:chip
+    skip_updates: 10
+ 
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Machine running status 4
-    id: ${sprsun_device_prefix}_machine_status_4
+    name: ${sprsun_device_name} Display version
+    id: ${sprsun_device_prefix}_display_version
     register_type: holding
     address: 0x002D
     value_type: U_WORD
+    entity_category: diagnostic
+    icon: mdi:monitor
+    skip_updates: 10
 
-  # Compressor frequency and current
+  # Compressor start counter
+  - platform: template
+    name: ${sprsun_device_name} Compressor starts
+    id: ${sprsun_device_prefix}_number_of_compressor_starts
+    icon: mdi:counter
+    unit_of_measurement: "starts"
+    accuracy_decimals: 0
+    lambda: 'return id(number_compressor_starts);'
+    state_class: measurement
+
+  # Defrost counter
+  - platform: template
+    name: ${sprsun_device_name} Defrosts count
+    id: ${sprsun_device_prefix}_defrosts_count
+    icon: mdi:counter
+    unit_of_measurement: "defrosts"
+    accuracy_decimals: 0
+    lambda: 'return id(number_defrost);'
+    state_class: measurement
+
+  # Duty time sensors
+  - platform: duty_time
+    name: ${sprsun_device_name} Work Heating time
+    id: ${sprsun_device_prefix}_heating_work_time
+    sensor: ${sprsun_device_prefix}_heating
+    restore: true
+    last_time:
+      name: Last time ${sprsun_device_name} Heating time
+
+  - platform: duty_time
+    name: ${sprsun_device_name} Work Cooling time
+    id: ${sprsun_device_prefix}_cooling_work_time
+    sensor: ${sprsun_device_prefix}_cooling
+    restore: true
+    last_time:
+      name: Last time ${sprsun_device_name} Cooling time
+
+  - platform: duty_time
+    name: ${sprsun_device_name} Compressor time
+    id: ${sprsun_device_prefix}_compressor_work_time
+    sensor: ${sprsun_device_prefix}_compressor
+    restore: true
+    last_time:
+      name: Last time ${sprsun_device_name} Compressor time
+
+  # Temperature sensors
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Comp Frequency
+    name: ${sprsun_device_name} Inlet temperature
+    id: ${sprsun_device_prefix}_inlet_temp
+    register_type: holding
+    address: 0x000E 
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.1;'
+    accuracy_decimals: 2
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Outlet temperature
+    id: ${sprsun_device_prefix}_outlet_temp
+    register_type: holding
+    address: 0x0012
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.1;'
+    accuracy_decimals: 2
+
+  # Delta temperature calculation
+  - platform: template
+    name: ${sprsun_device_name} Delta
+    id: ${sprsun_device_prefix}_delta
+    icon: mdi:delta
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    accuracy_decimals: 2
+    update_interval: ${sprsun_update_interval}
+    lambda: 'return id(${sprsun_device_prefix}_outlet_temp).state - id(${sprsun_device_prefix}_inlet_temp).state;'
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Ambient temperature
+    id: ${sprsun_device_prefix}_ambi_temp
+    register_type: holding
+    address: 0x0011
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.5;'
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Power
+    id: ${sprsun_device_prefix}_power_w
+    register_type: holding
+    address: 0x0017
+    unit_of_measurement: "W"
+    device_class: "power"
+    state_class: "measurement"
+    value_type: U_WORD
+    filters:
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Compressor frequency
     id: ${sprsun_device_prefix}_comp_frequency
     register_type: holding
-    address: 0x002E
-    value_type: U_WORD
+    address: 0x001E
     unit_of_measurement: "Hz"
-    accuracy_decimals: 0
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Comp current
-    id: ${sprsun_device_prefix}_comp_current
-    register_type: holding
-    address: 0x002F
+    device_class: "frequency"
     value_type: U_WORD
-    unit_of_measurement: "A"
-    accuracy_decimals: 1
     filters:
-      - multiply: 0.1
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 2
 
-  # Fan RPM sensors
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Fan 1 RPM
-    id: ${sprsun_device_prefix}_fan_1_rpm
+    name: ${sprsun_device_name} Compressor target frequency
+    id: ${sprsun_device_prefix}_comp_frequency_target
     register_type: holding
-    address: 0x0030
+    address: 0x0024
+    unit_of_measurement: "Hz"
+    device_class: "frequency"
     value_type: U_WORD
-    unit_of_measurement: "rpm"
-    accuracy_decimals: 0
+    filters:
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 2
 
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Fan 2 RPM
-    id: ${sprsun_device_prefix}_fan_2_rpm
+    name: ${sprsun_device_name} Fan speed
+    id: ${sprsun_device_prefix}_fan_speed
+    register_type: holding
+    address: 0x0026
+    unit_of_measurement: "RPM"
+    value_type: U_WORD
+    filters:
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Fan target speed
+    id: ${sprsun_device_prefix}_fan_target
     register_type: holding
     address: 0x0031
+    unit_of_measurement: "RPM"
     value_type: U_WORD
-    unit_of_measurement: "rpm"
+    filters:
+      - lambda: 'return x * 1.0;'
     accuracy_decimals: 0
 
-  # EEV (Electronic Expansion Valve) position
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} EEV position
-    id: ${sprsun_device_prefix}_eev_position
+    name: ${sprsun_device_name} Pump speed
+    id: ${sprsun_device_prefix}_pump_speed
+    register_type: holding
+    address: 0x002E
+    unit_of_measurement: "%"
+    value_type: U_WORD
+    filters:
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 1
+
+  # Parameter marker (used for bit manipulation in controls)
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    id: parameter_marker_definition_raw
     register_type: holding
     address: 0x0032
     value_type: U_WORD
-    unit_of_measurement: "steps"
-    accuracy_decimals: 0
 
-  # Current step value
+  # Control Mark 1 raw sensor (for bit manipulation in controls)
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Current step value
-    id: ${sprsun_device_prefix}_current_step_value
+    id: control_mark_1_raw
     register_type: holding
     address: 0x0033
     value_type: U_WORD
 
-  # Runtime counters
+  # Control Mark 2 raw sensor (for bit manipulation in controls)
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Comp total runtime
-    id: ${sprsun_device_prefix}_comp_total_runtime
+    id: control_mark_2_raw
+    register_type: holding
+    address: 0x0034
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heating Temperature
+    id: ${sprsun_device_prefix}_heating_temp
+    register_type: holding
+    address: 0x00CC
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.5;'
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling Temperature
+    id: ${sprsun_device_prefix}_cooling_temp
+    register_type: holding
+    address: 0x00CB
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.5;'
+    accuracy_decimals: 2
+
+  # Pressure sensors
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Suction pressure
+    id: ${sprsun_device_prefix}_suct_press
+    register_type: holding
+    address: 0x002F
+    unit_of_measurement: "bar"
+    device_class: "pressure"
+    value_type: U_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 1
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Discharge pressure
+    id: ${sprsun_device_prefix}_disch_press
+    register_type: holding
+    address: 0x0030
+    unit_of_measurement: "bar"
+    device_class: "pressure"
+    value_type: U_WORD
+    filters:
+      - multiply: 0.01
+    accuracy_decimals: 1
+
+  # Additional temperature sensors
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Suction gas temperature
+    id: ${sprsun_device_prefix}_suct_gas_temp
+    register_type: holding
+    address: 0x0015
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.5;'
+    accuracy_decimals: 2
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Coil temperature
+    id: ${sprsun_device_prefix}_coil_temp
+    register_type: holding
+    address: 0x0016
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.5;'
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Exhaust temperature
+    id: ${sprsun_device_prefix}_exhaust_temp
+    register_type: holding
+    address: 0x001B
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Evaporator temperature
+    id: ${sprsun_device_prefix}_evap_temp
+    register_type: holding
+    address: 0x0028
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.1;'
+    accuracy_decimals: 2
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Condenser temperature
+    id: ${sprsun_device_prefix}_cond_temp
+    register_type: holding
+    address: 0x0029
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.1;'
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Driving temperature
+    id: ${sprsun_device_prefix}_driving_temp
+    register_type: holding
+    address: 0x0022
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    value_type: S_WORD
+    filters:
+      - lambda: 'return x * 0.5;'
+    accuracy_decimals: 1
+
+  # EEV position monitoring
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} EEV1 step
+    id: ${sprsun_device_prefix}_eev1_step
+    register_type: holding
+    address: 0x001C
+    value_type: U_WORD
+    entity_category: diagnostic
+    icon: mdi:valve
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} EEV2 step
+    id: ${sprsun_device_prefix}_eev2_step
+    register_type: holding
+    address: 0x001D
+    value_type: U_WORD
+    entity_category: diagnostic
+    icon: mdi:valve
+
+  # Electrical diagnostics
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC bus voltage
+    id: ${sprsun_device_prefix}_dc_bus_voltage
+    register_type: holding
+    address: 0x0021
+    unit_of_measurement: "V"
+    device_class: "voltage"
+    state_class: "measurement"
+    value_type: U_WORD
+    entity_category: diagnostic
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Compressor current
+    id: ${sprsun_device_prefix}_compressor_current
+    register_type: holding
+    address: 0x0023
+    unit_of_measurement: "A"
+    device_class: "current"
+    state_class: "measurement"
+    value_type: U_WORD
+    entity_category: diagnostic
+    accuracy_decimals: 1
+
+  # Frequency conversion failure diagnostics
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Frequency conversion failure 1
+    id: ${sprsun_device_prefix}_freq_failure_1
+    register_type: holding
+    address: 0x001F
+    value_type: U_WORD
+    entity_category: diagnostic
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Frequency conversion failure 2
+    id: ${sprsun_device_prefix}_freq_failure_2
+    register_type: holding
+    address: 0x0020
+    value_type: U_WORD
+    entity_category: diagnostic
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Frequency conversion failure 3
+    id: ${sprsun_device_prefix}_freq_failure_3
+    register_type: holding
+    address: 0x002A
+    value_type: U_WORD
+    entity_category: diagnostic
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Frequency conversion failure 4
+    id: ${sprsun_device_prefix}_freq_failure_4
+    register_type: holding
+    address: 0x002B
+    value_type: U_WORD
+    entity_category: diagnostic
+
+  # DC fan 2 speed monitoring  
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan 2 speed
+    id: ${sprsun_device_prefix}_dc_fan_2_speed
+    register_type: holding
+    address: 0x0027
+    unit_of_measurement: "RPM"
+    value_type: U_WORD
+    entity_category: diagnostic
+    filters:
+      - lambda: 'return x * 1.0;'
+    accuracy_decimals: 2
+
+  # Model identification
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Model code
+    id: ${sprsun_device_prefix}_model_code
+    register_type: holding
+    address: 0x01BA
+    value_type: U_WORD
+    entity_category: diagnostic
+    icon: mdi:information
+    skip_updates: 50
+
+  # Timeband enable raw sensor (for bit manipulation in controls)
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    id: timeband_enable_raw
     register_type: holding
     address: 0x0035
-    value_type: U_DWORD
-    unit_of_measurement: "h"
-    accuracy_decimals: 0
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Unit total runtime
-    id: ${sprsun_device_prefix}_unit_total_runtime
-    register_type: holding
-    address: 0x0037
-    value_type: U_DWORD
-    unit_of_measurement: "h"
-    accuracy_decimals: 0
-
-  # Power consumption
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Power
-    id: ${sprsun_device_prefix}_power
-    register_type: holding
-    address: 0x0039
     value_type: U_WORD
-    unit_of_measurement: "W"
-    accuracy_decimals: 0
-    filters:
-      - multiply: 100
-
-  # Current consumption by phases
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} L1 current
-    id: ${sprsun_device_prefix}_l1_current
-    register_type: holding
-    address: 0x003A
-    value_type: U_WORD
-    unit_of_measurement: "A"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} L2 current
-    id: ${sprsun_device_prefix}_l2_current
-    register_type: holding
-    address: 0x003B
-    value_type: U_WORD
-    unit_of_measurement: "A"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} L3 current
-    id: ${sprsun_device_prefix}_l3_current
-    register_type: holding
-    address: 0x003C
-    value_type: U_WORD
-    unit_of_measurement: "A"
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Voltage by phases
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} L1 voltage
-    id: ${sprsun_device_prefix}_l1_voltage
-    register_type: holding
-    address: 0x003D
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    accuracy_decimals: 0
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} L2 voltage
-    id: ${sprsun_device_prefix}_l2_voltage
-    register_type: holding
-    address: 0x003E
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    accuracy_decimals: 0
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} L3 voltage
-    id: ${sprsun_device_prefix}_l3_voltage
-    register_type: holding
-    address: 0x003F
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    accuracy_decimals: 0

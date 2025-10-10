@@ -13,6 +13,16 @@ binary_sensor:
     address: 0x0003
     bitmask: 0x02
 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling
+    id: ${sprsun_device_prefix}_cooling
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0003
+    bitmask: 0x20
+
   # Defrost status binary sensor with counter automation
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
@@ -62,3 +72,109 @@ binary_sensor:
     register_type: holding
     address: 0x0005
     bitmask: 0x0001
+
+  # Frequency conversion failure detection
+  - platform: template
+    name: ${sprsun_device_name} Frequency conversion failure
+    id: ${sprsun_device_prefix}_freq_conversion_failure
+    device_class: problem
+    entity_category: diagnostic
+    lambda: |-
+      // Check if any frequency conversion failure registers have non-zero values
+      return (id(${sprsun_device_prefix}_freq_failure_1).state > 0 ||
+              id(${sprsun_device_prefix}_freq_failure_2).state > 0 ||
+              id(${sprsun_device_prefix}_freq_failure_3).state > 0 ||
+              id(${sprsun_device_prefix}_freq_failure_4).state > 0);
+
+  # Missing valve and pump status sensors
+  # 4-way valve status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} 4-way valve
+    id: ${sprsun_device_prefix}_4way_valve
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0004
+    bitmask: 0x40
+
+  # Three-way valve status  
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Three-way valve
+    id: ${sprsun_device_prefix}_3way_valve
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0005
+    bitmask: 0x40
+
+  # Hot water heater status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Hot water heater
+    id: ${sprsun_device_prefix}_hotwater_heater
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0005
+    bitmask: 0x80
+
+  # A/C Pump status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} A/C Pump
+    id: ${sprsun_device_prefix}_ac_pump
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0006
+    bitmask: 0x01
+
+  # Crank heater status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Crank heater
+    id: ${sprsun_device_prefix}_crank_heater
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0006
+    bitmask: 0x02
+
+  # Assistant solenoid valve status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Assistant solenoid valve
+    id: ${sprsun_device_prefix}_assistant_solenoid
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0006
+    bitmask: 0x20
+
+  # Pump status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Pump
+    id: ${sprsun_device_prefix}_pump
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0006
+    bitmask: 0x40
+
+  # With/without heating status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} With heating
+    id: ${sprsun_device_prefix}_with_heating
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0003
+    bitmask: 0x04
+
+  # With/without cooling status
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} With cooling
+    id: ${sprsun_device_prefix}_with_cooling
+    entity_category: diagnostic
+    register_type: holding
+    address: 0x0003
+    bitmask: 0x08

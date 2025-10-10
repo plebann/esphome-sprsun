@@ -10,7 +10,7 @@ This document provides step-by-step instructions for setting up the GitHub repos
 2. Click the "+" icon in the top right corner
 3. Select "New repository"
 4. Configure the repository:
-   - **Repository name**: `sprsun-esphome-package`
+   - **Repository name**: `esphome-packages`
    - **Description**: "ESPHome package for SPRSUN heat pump integration with native Git support"
    - **Visibility**: Public (recommended for community access)
    - **Initialize repository**: Leave unchecked (we'll push existing content)
@@ -21,7 +21,7 @@ This document provides step-by-step instructions for setting up the GitHub repos
 Navigate to the created package directory and initialize Git:
 
 ```bash
-cd sprsun-esphome-package
+cd esphome-packages
 git init
 git add .
 git commit -m "Initial commit: SPRSUN ESPHome Package v1.0"
@@ -32,7 +32,7 @@ git commit -m "Initial commit: SPRSUN ESPHome Package v1.0"
 Add the GitHub repository as remote origin:
 
 ```bash
-git remote add origin https://github.com/yourusername/sprsun-esphome-package.git
+git remote add origin https://github.com/yourusername/esphome-packages.git
 git branch -M main
 git push -u origin main
 ```
@@ -82,7 +82,7 @@ Add relevant topics to help users discover the package:
 Ensure your repository contains:
 
 ```
-sprsun-esphome-package/
+esphome-packages/
 ├── .github/
 │   └── workflows/
 │       └── validation.yml
@@ -119,7 +119,7 @@ Test that the repository works with ESPHome Git integration:
 # Test configuration
 packages:
   sprsun_test:
-    url: https://github.com/yourusername/sprsun-esphome-package
+    url: https://github.com/yourusername/esphome-packages
     files: [packages/sprsun/complete.yaml]
     ref: main
     vars:

@@ -1,414 +1,3070 @@
 # SPRSUN Heat Pump Package - Controls
 # Part of the modular SPRSUN heat pump integration package
 
-number:
-  # Hot water temperature settings
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Hot water set temp
-    id: ${sprsun_device_prefix}_hot_water_set_temp
-    register_type: holding
-    address: 0x0100
-    min_value: 5
-    max_value: 80
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Hot water max temp
-    id: ${sprsun_device_prefix}_hot_water_max_temp
-    register_type: holding
-    address: 0x0101
-    min_value: 10
-    max_value: 80
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Hot water min temp
-    id: ${sprsun_device_prefix}_hot_water_min_temp
-    register_type: holding
-    address: 0x0102
-    min_value: 5
-    max_value: 75
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # Heating temperature settings
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Heating set temp
-    id: ${sprsun_device_prefix}_heating_set_temp
-    register_type: holding
-    address: 0x0103
-    min_value: 5
-    max_value: 50
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Heating max temp
-    id: ${sprsun_device_prefix}_heating_max_temp
-    register_type: holding
-    address: 0x0104
-    min_value: 10
-    max_value: 50
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Heating min temp
-    id: ${sprsun_device_prefix}_heating_min_temp
-    register_type: holding
-    address: 0x0105
-    min_value: 5
-    max_value: 45
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # Cooling temperature settings
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Cooling set temp
-    id: ${sprsun_device_prefix}_cooling_set_temp
-    register_type: holding
-    address: 0x0106
-    min_value: 5
-    max_value: 25
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Cooling max temp
-    id: ${sprsun_device_prefix}_cooling_max_temp
-    register_type: holding
-    address: 0x0107
-    min_value: 10
-    max_value: 25
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Cooling min temp
-    id: ${sprsun_device_prefix}_cooling_min_temp
-    register_type: holding
-    address: 0x0108
-    min_value: 5
-    max_value: 20
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # Temperature differentials
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Hot water diff
-    id: ${sprsun_device_prefix}_hot_water_diff
-    register_type: holding
-    address: 0x0109
-    min_value: 1
-    max_value: 30
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Heating diff
-    id: ${sprsun_device_prefix}_heating_diff
-    register_type: holding
-    address: 0x010A
-    min_value: 1
-    max_value: 10
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Cooling diff
-    id: ${sprsun_device_prefix}_cooling_diff
-    register_type: holding
-    address: 0x010B
-    min_value: 1
-    max_value: 10
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # System control parameters
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Antilegionella cycle
-    id: ${sprsun_device_prefix}_antilegionella_cycle
-    register_type: holding
-    address: 0x010C
-    min_value: 0
-    max_value: 100
-    step: 1
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Runtime for heating element step1
-    id: ${sprsun_device_prefix}_heating_element_step1_runtime
-    register_type: holding
-    address: 0x010D
-    min_value: 0
-    max_value: 100
-    step: 1
-    unit_of_measurement: "min"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Runtime for heating element step2
-    id: ${sprsun_device_prefix}_heating_element_step2_runtime
-    register_type: holding
-    address: 0x010E
-    min_value: 0
-    max_value: 100
-    step: 1
-    unit_of_measurement: "min"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Step diff for heating element
-    id: ${sprsun_device_prefix}_step_diff_heating_element
-    register_type: holding
-    address: 0x010F
-    min_value: 1
-    max_value: 50
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # Antifreeze protection settings
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Antifreeze temp
-    id: ${sprsun_device_prefix}_antifreeze_temp
-    register_type: holding
-    address: 0x0110
-    min_value: -30
-    max_value: 15
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Temp rise for antifreeze stop
-    id: ${sprsun_device_prefix}_temp_rise_antifreeze_stop
-    register_type: holding
-    address: 0x0111
-    min_value: 1
-    max_value: 20
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # Additional temperature protections
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Max outlet water temp for heating
-    id: ${sprsun_device_prefix}_max_outlet_heating_temp
-    register_type: holding
-    address: 0x0112
-    min_value: 15
-    max_value: 70
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Min outlet water temp for cooling
-    id: ${sprsun_device_prefix}_min_outlet_cooling_temp
-    register_type: holding
-    address: 0x0113
-    min_value: 1
-    max_value: 25
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  # Compressor control parameters
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Compressor start temp diff
-    id: ${sprsun_device_prefix}_comp_start_temp_diff
-    register_type: holding
-    address: 0x0114
-    min_value: 1
-    max_value: 20
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Min frequency for compressor
-    id: ${sprsun_device_prefix}_min_comp_frequency
-    register_type: holding
-    address: 0x0115
-    min_value: 30
-    max_value: 87
-    step: 1
-    unit_of_measurement: "Hz"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Max frequency for compressor
-    id: ${sprsun_device_prefix}_max_comp_frequency
-    register_type: holding
-    address: 0x0116
-    min_value: 30
-    max_value: 87
-    step: 1
-    unit_of_measurement: "Hz"
-
-  # Defrost control parameters
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Defrost start temp
-    id: ${sprsun_device_prefix}_defrost_start_temp
-    register_type: holding
-    address: 0x0117
-    min_value: -25
-    max_value: 5
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Defrost back temp
-    id: ${sprsun_device_prefix}_defrost_back_temp
-    register_type: holding
-    address: 0x0118
-    min_value: 1
-    max_value: 25
-    step: 1
-    multiply: 10
-    unit_of_measurement: "°C"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Defrost max time
-    id: ${sprsun_device_prefix}_defrost_max_time
-    register_type: holding
-    address: 0x0119
-    min_value: 2
-    max_value: 12
-    step: 1
-    unit_of_measurement: "min"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Defrost interval time
-    id: ${sprsun_device_prefix}_defrost_interval_time
-    register_type: holding
-    address: 0x011A
-    min_value: 30
-    max_value: 120
-    step: 1
-    unit_of_measurement: "min"
-
-  # Water flow and pump settings
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Water flow alarm time
-    id: ${sprsun_device_prefix}_water_flow_alarm_time
-    register_type: holding
-    address: 0x011B
-    min_value: 10
-    max_value: 120
-    step: 1
-    unit_of_measurement: "s"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Pump off delay time
-    id: ${sprsun_device_prefix}_pump_off_delay_time
-    register_type: holding
-    address: 0x011C
-    min_value: 10
-    max_value: 600
-    step: 1
-    unit_of_measurement: "s"
-
-  - platform: modbus_controller
-    modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Pump on advance time
-    id: ${sprsun_device_prefix}_pump_on_advance_time
-    register_type: holding
-    address: 0x011D
-    min_value: 10
-    max_value: 300
-    step: 1
-    unit_of_measurement: "s"
-
 select:
   # Operation mode selection
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} System mode
-    id: ${sprsun_device_prefix}_system_mode
-    address: 0x0080
+    name: ${sprsun_device_name} Unit mode
+    id: ${sprsun_device_prefix}_unit_mode
+    address: 0x0036
+    entity_category: config
+    value_type: U_WORD
+    optimistic: false
+    skip_updates: 6
     optionsmap:
-      "Off": 0
+      "CWU": 0
+      "Heating": 1
+      "Cooling": 2
+      "Heating + HW": 3
+      "Cooling + HW": 4
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Pump mode
+    id: ${sprsun_device_prefix}_pump_mode
+    address: 0x0186
+    entity_category: config
+    value_type: U_WORD
+    optimistic: false
+    skip_updates: 6
+    optionsmap:
+      "Manual": 0
       "Auto": 1
-      "Heating": 2
-      "Cooling": 3
-      "Hot Water": 4
-      "Heating + Hot Water": 5
-      "Cooling + Hot Water": 6
 
-  # Fan speed selection
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Fan speed
-    id: ${sprsun_device_prefix}_fan_speed
-    address: 0x0081
+    name: ${sprsun_device_name} Compressor mode
+    id: ${sprsun_device_prefix}_compressor_mode
+    address: 0x0190
+    entity_category: config
+    value_type: U_WORD
+    optimistic: false
+    skip_updates: 6
     optionsmap:
-      "Auto": 0
-      "Low": 1
-      "High": 2
+      "Normal": 0
+      "Eco": 1
+      "Night": 2
+      "Test": 3
 
-switch:
-  # Main system power switch
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Power switch
-    id: ${sprsun_device_prefix}_power_switch
-    register_type: coil
-    address: 0x0001
+    name: ${sprsun_device_name} Pump work mode
+    id: ${sprsun_device_prefix}_pump_work
+    address: 0x019E
+    entity_category: config
+    value_type: U_WORD
+    optimistic: false
+    skip_updates: 10
+    optionsmap:
+      "Interval": 0
+      "Continous": 1
+      "On Demand": 2
 
-  # Emergency stop switch
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat pump switch
+    id: ${sprsun_device_prefix}_on_off
+    address: 0x0032
+    value_type: U_WORD
+    optionsmap:
+      "OFF": 0
+      "ON": 1
+    lambda: |-
+      if ((x & 0x0001) == 0)
+        return std::string("OFF");
+      if ((x & 0x0001) == 1)
+        return std::string("ON");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(parameter_marker_definition_raw).state;
+      uint16_t modified = ((unmodified & ~0x0001) | value);
+      return modified;
+ 
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: "${sprsun_device_name} Manual frequency selection"
+    id: ${sprsun_device_prefix}_manual_frequency_selection
+    address: 0x0032
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "OFF": 0
+      "ON": 4
+    lambda: |-
+      if ((x & 0x0004) == 0)
+        return std::string("OFF");
+      if ((x & 0x0004) == 4)
+        return std::string("ON");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified =  id(parameter_marker_definition_raw).state;
+      uint16_t modified = ((unmodified & ~0x0004) | value);
+      return modified;
+
+  # Control Mark 1 - bit 0: Constant freq adjustment (R29)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Constant freq adjustment
+    id: ${sprsun_device_prefix}_constant_freq_adj
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "NO": 0
+      "YES": 1
+    lambda: |-
+      if ((x & 0x0001) == 0)
+        return std::string("NO");
+      if ((x & 0x0001) == 1)
+        return std::string("YES");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0001) | value);
+      return modified;
+
+  # Control Mark 1 - bit 1: Pressure switch enable (F01)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Pressure switch enable
+    id: ${sprsun_device_prefix}_pressure_switch_enable
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 2
+    lambda: |-
+      if ((x & 0x0002) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0002) == 2)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0002) | value);
+      return modified;
+
+  # Control Mark 1 - bit 2: AV cool enable (B74)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} AV cool enable
+    id: ${sprsun_device_prefix}_av_cool_enable
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Use": 0
+      "Unuse": 4
+    lambda: |-
+      if ((x & 0x0004) == 0)
+        return std::string("Use");
+      if ((x & 0x0004) == 4)
+        return std::string("Unuse");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0004) | value);
+      return modified;
+
+  # Control Mark 1 - bit 3: AV control mode (B92)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} AV control mode
+    id: ${sprsun_device_prefix}_av_control_mode
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Enhance": 0
+      "Exhaust": 8
+    lambda: |-
+      if ((x & 0x0008) == 0)
+        return std::string("Enhance");
+      if ((x & 0x0008) == 8)
+        return std::string("Exhaust");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0008) | value);
+      return modified;
+
+  # Control Mark 1 - bit 4: DCfan 1 enable (D01)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan 1 enable
+    id: ${sprsun_device_prefix}_dcfan_1_enable
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 16
+    lambda: |-
+      if ((x & 0x0010) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0010) == 16)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0010) | value);
+      return modified;
+
+  # Control Mark 1 - bit 5: DCfan 2 enable (D02)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan 2 enable
+    id: ${sprsun_device_prefix}_dcfan_2_enable
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 32
+    lambda: |-
+      if ((x & 0x0020) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0020) == 32)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0020) | value);
+      return modified;
+
+  # Control Mark 1 - bit 6: Parameters reset
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Parameters reset
+    id: ${sprsun_device_prefix}_parameters_reset
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 64
+    lambda: |-
+      if ((x & 0x0040) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0040) == 64)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0040) | value);
+      return modified;
+
+  # Control Mark 1 - bit 7: Failure reset
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Failure reset
+    id: ${sprsun_device_prefix}_failure_reset
+    address: 0x0033
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 128
+    lambda: |-
+      if ((x & 0x0080) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0080) == 128)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_1_raw).state;
+      uint16_t modified = ((unmodified & ~0x0080) | value);
+      return modified;
+
+  # Control Mark 2 - bit 0: Antilegionella enable
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antilegionella enable
+    id: ${sprsun_device_prefix}_antilegionella_enable
+    address: 0x0034
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 1
+    lambda: |-
+      if ((x & 0x0001) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0001) == 1)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_2_raw).state;
+      uint16_t modified = ((unmodified & ~0x0001) | value);
+      return modified;
+
+  # Control Mark 2 - bit 1: Two/Three function (G01)
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Two/Three function
+    id: ${sprsun_device_prefix}_two_three_function
+    address: 0x0034
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Unuse": 0
+      "Use": 2
+    lambda: |-
+      if ((x & 0x0002) == 0)
+        return std::string("Unuse");
+      if ((x & 0x0002) == 2)
+        return std::string("Use");
+      return {};
+    write_lambda: |-
+      uint16_t unmodified = id(control_mark_2_raw).state;
+      uint16_t modified = ((unmodified & ~0x0002) | value);
+      return modified;
+
+number:
+  # Temperature setpoints
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Emergency stop
-    id: ${sprsun_device_prefix}_emergency_stop
-    register_type: coil
-    address: 0x0002
+    name: ${sprsun_device_name} Heating setpoint
+    address: 0x00CC
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_heating_setpoint
+    value_type: U_WORD
+    min_value: 10
+    max_value: 55
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 6
+    bitmask: 0x00FF
 
-  # Manual defrost trigger
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
-    name: ${sprsun_device_name} Manual defrost
-    id: ${sprsun_device_prefix}_manual_defrost
-    register_type: coil
-    address: 0x0003
+    name: ${sprsun_device_name} Cooling setpoint
+    address: 0x00CB
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_cooling_setpoint
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 6
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Hot water setpoint
+    address: 0x00CA
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_hotwater_setpoint
+    value_type: U_WORD
+    min_value: 10
+    max_value: 55
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 6
+    bitmask: 0x00FF
+
+  # Temperature calibration
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Inlet temp calibration
+    address: 0x00CE
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_inlet_temp_calibration
+    value_type: S_WORD
+    min_value: -30
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Outlet temp calibration
+    address: 0x00CF
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_outlet_temp_calibration
+    value_type: S_WORD
+    min_value: -30
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Defrost parameters
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost frequency
+    address: 0x0037
+    skip_updates: 10
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_defrost_freq
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config 
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost period 1
+    address: 0x0038
+    skip_updates: 10
+    unit_of_measurement: "MIN"
+    id: ${sprsun_device_prefix}_defrost_period_1
+    value_type: U_WORD
+    min_value: 10
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config  
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost period 2
+    address: 0x0039
+    skip_updates: 10      
+    unit_of_measurement: "MIN"
+    id: ${sprsun_device_prefix}_defrost_period_2
+    value_type: U_WORD
+    min_value: 10
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config  
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost period 3
+    address: 0x003A
+    skip_updates: 10      
+    unit_of_measurement: "MIN"
+    id: ${sprsun_device_prefix}_defrost_period_3
+    value_type: U_WORD
+    min_value: 10
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config  
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Compressor total run
+    address: 0x003B
+    skip_updates: 10      
+    unit_of_measurement: "MIN"
+    id: ${sprsun_device_prefix}_comp_total_run
+    value_type: U_WORD
+    min_value: 1
+    max_value: 300
+    lambda: 'return x * 5.0;'
+    write_lambda: 'return x / 5.0;'
+    step: 1
+    mode: box
+    entity_category: config 
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Compressor continuous run
+    address: 0x003C
+    skip_updates: 10      
+    unit_of_measurement: "MIN"
+    id: ${sprsun_device_prefix}_comp_continuous_run
+    value_type: U_WORD
+    min_value: 5
+    max_value: 90
+    step: 1
+    mode: box
+    entity_category: config 
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost time
+    address: 0x003D
+    skip_updates: 10      
+    unit_of_measurement: "MIN"
+    id: ${sprsun_device_prefix}_defrost_time
+    value_type: U_WORD
+    min_value: 5
+    max_value: 20
+    step: 1
+    mode: box
+    entity_category: config
+
+  # Temperature differentials
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} temp diff
+    address: 0x00C6
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_temp_diff
+    value_type: U_WORD
+    min_value: 2
+    max_value: 18
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling temp diff
+    address: 0x00C7
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_cooling_temp_diff
+    value_type: U_WORD
+    min_value: 1
+    max_value: 10
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Heating frequency curves
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat (T >= 14 °C)
+    address: 0x0104
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r04
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat [9, 14 °C)
+    address: 0x0105
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r05
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat [4, 9 °C)
+    address: 0x0106
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r06
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat [-5, 4 °C)
+    address: 0x0107
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r07
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat [-10, -5 °C)
+    address: 0x0108
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r08
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat [-16, -10 °C)
+    address: 0x0109
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r09
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat [-23, -16 °C)
+    address: 0x010A
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r10
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of heat (T < -23 °C)
+    address: 0x010B
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_heat_r11
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Cooling frequency curves
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of cool (T >= 38 °C)
+    address: 0x010C
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_cool_r12
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of cool [30, 38 °C)
+    address: 0x010D
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_cool_r13
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of cool [25, 30 °C)
+    address: 0x010E
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_cool_r14
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq of cool (T < 25 °C)
+    address: 0x010F
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_cool_r15
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Manual frequency setting
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Manual frequency setting
+    id: ${sprsun_device_prefix}_manual_frequency_setting
+    address: 0x00FB
+    unit_of_measurement: "Hz"
+    value_type: U_WORD
+    min_value: 25
+    max_value: 80
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Delta setting
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Delta setting
+    id: ${sprsun_device_prefix}_delta_set
+    address: 0x018D
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    min_value: 5
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Economic mode - Heating ambient temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat ambi 1
+    address: 0x0169
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_ambi_1
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat ambi 2
+    address: 0x016A
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_ambi_2
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat ambi 3
+    address: 0x016B
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_ambi_3
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat ambi 4
+    address: 0x016C
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_ambi_4
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Economic mode - Cooling ambient temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool ambi 1
+    address: 0x0171
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_ambi_1
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool ambi 2
+    address: 0x0172
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_ambi_2
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool ambi 3
+    address: 0x0173
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_ambi_3
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool ambi 4
+    address: 0x0174
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_ambi_4
+    value_type: S_WORD
+    min_value: -30
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Economic mode - Heating target temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat temp 1
+    address: 0x0175
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_temp_1
+    value_type: U_WORD
+    min_value: 10
+    max_value: 55
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF 
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat temp 2
+    address: 0x0176
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_temp_2
+    value_type: U_WORD
+    min_value: 10
+    max_value: 55
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat temp 3
+    address: 0x0177
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_temp_3
+    value_type: U_WORD
+    min_value: 10
+    max_value: 55
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Heat temp 4
+    address: 0x0178
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_heat_temp_4
+    value_type: U_WORD
+    min_value: 10
+    max_value: 55
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  # Economic mode - Cooling target temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool temp 1
+    address: 0x017D
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_temp_1
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool temp 2
+    address: 0x017E
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_temp_2
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool temp 3
+    address: 0x017F
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_temp_3
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Eco Cool temp 4
+    address: 0x0180
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_economic_cool_temp_4
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: "return x * 0.5;"
+    write_lambda: "return x / 0.5;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  # Frequency adjustment limits (lower)
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj lower limit R21
+    address: 0x0110
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_lower_limit_r21
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj lower limit R22
+    address: 0x0111
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_lower_limit_r22
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj lower limit R23
+    address: 0x0112
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_lower_limit_r23
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj lower limit R24
+    address: 0x0113
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_lower_limit_r24
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Frequency adjustment limits (upper)
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj upper limit R25
+    address: 0x0114
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_upper_limit_r25
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj upper limit R26
+    address: 0x0115
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_upper_limit_r26
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj upper limit R27
+    address: 0x0116
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_upper_limit_r27
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq adj upper limit R28
+    address: 0x0117
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_adj_upper_limit_r28
+    value_type: U_WORD
+    min_value: 0
+    max_value: 125
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+  
+  # ECO mode frequency curves
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R42
+    address: 0x0135
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r42
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R43
+    address: 0x0136
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r43
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R44
+    address: 0x0137
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r44
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R45
+    address: 0x0138
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r45
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+      
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R46
+    address: 0x0139
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r46
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+      
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R47
+    address: 0x013A
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r47
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+      
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R48
+    address: 0x013B
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r48
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Freq eco R49
+    address: 0x013C
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_eco_r49
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # DC Pump configuration
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F14 DC pump cycle
+    address: 0x0187
+    unit_of_measurement: "s"
+    id: ${sprsun_device_prefix}_dc_pump_cycle
+    value_type: U_WORD
+    min_value: 10
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F15 DC pump freq set
+    address: 0x0188
+    unit_of_measurement: "%"
+    id: ${sprsun_device_prefix}_dc_pump_freq_set
+    value_type: U_WORD
+    min_value: 10
+    max_value: 100
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F16 DC pump max freq
+    address: 0x0189
+    unit_of_measurement: "%"
+    id: ${sprsun_device_prefix}_dc_pump_max_freq
+    value_type: U_WORD
+    min_value: 10
+    max_value: 100
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F17 DC pump min freq
+    address: 0x018A
+    unit_of_measurement: "%"
+    id: ${sprsun_device_prefix}_dc_pump_min_freq
+    value_type: U_WORD
+    min_value: 10
+    max_value: 100
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F18 DC pump scale factor
+    address: 0x018B
+    id: ${sprsun_device_prefix}_dc_pump_scale_factor
+    value_type: U_WORD
+    min_value: 1
+    max_value: 10
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F19 DC pump diff
+    address: 0x018C
+    id: ${sprsun_device_prefix}_dc_pump_diff
+    value_type: U_WORD
+    min_value: 0
+    max_value: 100
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Defrost advanced configuration
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost in stp.
+    address: 0x00D4
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_defrost_in_stp
+    value_type: S_WORD
+    min_value: -15
+    max_value: -1
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost exit stp.
+    address: 0x00D5
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_defrost_exit_stp
+    value_type: U_WORD
+    min_value: 1
+    max_value: 40
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Def ambi coil 1
+    address: 0x00D6
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_def_ambi_coil_1
+    value_type: U_WORD
+    min_value: 0
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Def ambi coil 2
+    address: 0x00D7
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_def_ambi_coil_2
+    value_type: U_WORD
+    min_value: 0
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Def ambi coil 3
+    address: 0x00D8
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_def_ambi_coil_3
+    value_type: U_WORD
+    min_value: 0
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost ambient stp. 1
+    address: 0x00D9
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_defrost_ambi_stp_1
+    value_type: S_WORD
+    min_value: -30
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost ambient stp. 2
+    address: 0x00DA
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_defrost_ambi_stp_2
+    value_type: S_WORD
+    min_value: -30
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost ambient stp. 3
+    address: 0x00DB
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_defrost_ambi_stp_3
+    value_type: S_WORD
+    min_value: -30
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost fan speed
+    address: 0x01B1
+    unit_of_measurement: "rpm"
+    id: ${sprsun_device_prefix}_defrost_fan_speed
+    value_type: U_WORD
+    min_value: 20
+    max_value: 100
+    lambda: "return x / 10.0;"
+    write_lambda: "return x * 10.0;"
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Pressure Protection Controls
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} HP protect value
+    address: 0x0082
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_hp_protect_value
+    value_type: U_WORD
+    min_value: 25.0
+    max_value: 50.0
+    lambda: 'return (x + 250) * 0.1;'
+    write_lambda: 'return (x / 0.1) - 250;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} HP recover value
+    address: 0x0083
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_hp_recover_value
+    value_type: U_WORD
+    min_value: 25.0
+    max_value: 50.0
+    lambda: 'return (x + 250) * 0.1;'
+    write_lambda: 'return (x / 0.1) - 250;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} LP protect value
+    address: 0x0084
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_lp_protect_value
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 20.0
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} LP recover value
+    address: 0x0085
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_lp_recover_value
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 20.0
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Water frequency curves for different temperature ranges
+  # R00: T >= 14°C
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R00 (T >= 14°C)
+    address: 0x00FC
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r00
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R01: [9, 14)°C  
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R01 (9-14°C)
+    address: 0x00FD
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r01
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R02: [4, 9)°C
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R02 (4-9°C)
+    address: 0x00FE
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r02
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R03: [-5, 4)°C
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R03 (-5-4°C)
+    address: 0x00FF
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r03
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R04: [-10, -5)°C
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R04 (-10--5°C)
+    address: 0x0100
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r04
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R05: [-16, -10)°C
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R05 (-16--10°C)
+    address: 0x0101
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r05
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R06: [-23, -16)°C  
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R06 (-23--16°C)
+    address: 0x0102
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r06
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # R07: T < -23°C
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Water freq R07 (T < -23°C)
+    address: 0x0103
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_freq_of_water_r07
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # ECO Water frequency curves (R34-R41)
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R34
+    address: 0x012D
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r34
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R35
+    address: 0x012E
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r35
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R36
+    address: 0x012F
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r36
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R37
+    address: 0x0130
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r37
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R38
+    address: 0x0131
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r38
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R39
+    address: 0x0132
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r39
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R40
+    address: 0x0133
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r40
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO water freq R41
+    address: 0x0134
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_water_r41
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # ECO Cooling frequency curves (R50-R53)
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO cool freq R50
+    address: 0x013D
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_cool_r50
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO cool freq R51
+    address: 0x013E
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_cool_r51
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO cool freq R52
+    address: 0x013F
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_cool_r52
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} ECO cool freq R53
+    address: 0x0140
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_eco_freq_cool_r53
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+select:
+  # Timeband enable controls with bit manipulation
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 enable
+    id: ${sprsun_device_prefix}_timeband_1_enable
+    address: 0x0035
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Disabled": 0
+      "Enabled": 1
+    lambda: |-
+      if ((x & 0x0001) == 0)
+        return std::string("Disabled");
+      return std::string("Enabled");
+    write_lambda: |-
+      uint16_t unmodified = id(timeband_enable_raw).state;
+      uint16_t modified = ((unmodified & ~0x0001) | value);
+      return modified;
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 enable
+    id: ${sprsun_device_prefix}_timeband_2_enable
+    address: 0x0035
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Disabled": 0
+      "Enabled": 1
+    lambda: |-
+      if ((x & 0x0002) == 0)
+        return std::string("Disabled");
+      return std::string("Enabled");
+    write_lambda: |-
+      uint16_t unmodified = id(timeband_enable_raw).state;
+      uint16_t modified = ((unmodified & ~0x0002) | (value << 1));
+      return modified;
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 enable
+    id: ${sprsun_device_prefix}_timeband_3_enable
+    address: 0x0035
+    entity_category: config
+    value_type: U_WORD
+    optionsmap:
+      "Disabled": 0
+      "Enabled": 1
+    lambda: |-
+      if ((x & 0x0004) == 0)
+        return std::string("Disabled");
+      return std::string("Enabled");
+    write_lambda: |-
+      uint16_t unmodified = id(timeband_enable_raw).state;
+      uint16_t modified = ((unmodified & ~0x0004) | (value << 2));
+      return modified;
+
+number:
+  # Timeband ON/OFF times
+  # Timeband 1 times
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 ON hour
+    address: 0x0119
+    id: ${sprsun_device_prefix}_tb1_on_hour
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 ON minute
+    address: 0x011A
+    id: ${sprsun_device_prefix}_tb1_on_minute
+    value_type: U_WORD
+    min_value: 0
+    max_value: 59
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 OFF hour
+    address: 0x011B
+    id: ${sprsun_device_prefix}_tb1_off_hour
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 OFF minute
+    address: 0x011C
+    id: ${sprsun_device_prefix}_tb1_off_minute
+    value_type: U_WORD
+    min_value: 0
+    max_value: 59
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Timeband 2 times
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 ON hour
+    address: 0x011D
+    id: ${sprsun_device_prefix}_tb2_on_hour
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 ON minute
+    address: 0x011E
+    id: ${sprsun_device_prefix}_tb2_on_minute
+    value_type: U_WORD
+    min_value: 0
+    max_value: 59
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 OFF hour
+    address: 0x011F
+    id: ${sprsun_device_prefix}_tb2_off_hour
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 OFF minute
+    address: 0x0120
+    id: ${sprsun_device_prefix}_tb2_off_minute
+    value_type: U_WORD
+    min_value: 0
+    max_value: 59
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Timeband 3 times
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 ON hour
+    address: 0x0121
+    id: ${sprsun_device_prefix}_tb3_on_hour
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 ON minute
+    address: 0x0122
+    id: ${sprsun_device_prefix}_tb3_on_minute
+    value_type: U_WORD
+    min_value: 0
+    max_value: 59
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 OFF hour
+    address: 0x0123
+    id: ${sprsun_device_prefix}_tb3_off_hour
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 OFF minute
+    address: 0x0124
+    id: ${sprsun_device_prefix}_tb3_off_minute
+    value_type: U_WORD
+    min_value: 0
+    max_value: 59
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Timeband temperature setpoints
+  # Timeband 1 temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 DHW temp
+    address: 0x01A4
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb1_dhw_temp
+    value_type: U_WORD
+    min_value: 28
+    max_value: 60
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 heating temp
+    address: 0x01A5
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb1_heating_temp
+    value_type: U_WORD
+    min_value: 18
+    max_value: 60
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 cooling temp
+    address: 0x01A6
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb1_cooling_temp
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  # Timeband 2 temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 DHW temp
+    address: 0x01A7
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb2_dhw_temp
+    value_type: U_WORD
+    min_value: 28
+    max_value: 60
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 heating temp
+    address: 0x01A8
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb2_heating_temp
+    value_type: U_WORD
+    min_value: 18
+    max_value: 60
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 cooling temp
+    address: 0x01A9
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb2_cooling_temp
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  # Timeband 3 temperatures
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 DHW temp
+    address: 0x01AA
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb3_dhw_temp
+    value_type: U_WORD
+    min_value: 28
+    max_value: 60
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 heating temp
+    address: 0x01AB
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb3_heating_temp
+    value_type: U_WORD
+    min_value: 18
+    max_value: 60
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 cooling temp
+    address: 0x01AC
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_tb3_cooling_temp
+    value_type: U_WORD
+    min_value: 12
+    max_value: 30
+    lambda: 'return x * 0.5;'
+    write_lambda: 'return x / 0.5;'
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+    bitmask: 0x00FF
+
+  # Weekday selections
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 1 weekday
+    address: 0x01AD
+    id: ${sprsun_device_prefix}_tb1_weekday
+    value_type: U_WORD
+    min_value: 0
+    max_value: 6
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 2 weekday
+    address: 0x01AE
+    id: ${sprsun_device_prefix}_tb2_weekday
+    value_type: U_WORD
+    min_value: 0
+    max_value: 6
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Timeband 3 weekday
+    address: 0x01AF
+    id: ${sprsun_device_prefix}_tb3_weekday
+    value_type: U_WORD
+    min_value: 0
+    max_value: 6
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Antilegionella protection settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antilegionella temp setpoint
+    address: 0x019A
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_antilegionella_temp
+    value_type: U_WORD
+    min_value: 30
+    max_value: 70
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antilegionella weekday
+    address: 0x019B
+    id: ${sprsun_device_prefix}_antilegionella_weekday
+    value_type: U_WORD
+    min_value: 0
+    max_value: 6
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antilegionella start hour
+    address: 0x019C
+    id: ${sprsun_device_prefix}_antilegionella_start
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antilegionella end hour
+    address: 0x019D
+    id: ${sprsun_device_prefix}_antilegionella_end
+    value_type: U_WORD
+    min_value: 0
+    max_value: 23
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # DC Fan Control parameters (D03-D20)
+  # Cool DC fan settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool DC fan max speed
+    address: 0x0086
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_cool_dcfan_max
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool DC fan min speed
+    address: 0x0087
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_cool_dcfan_min
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool DC fan high pressure
+    address: 0x0088
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_cool_dcfan_high_press
+    value_type: U_WORD
+    min_value: 10
+    max_value: 30
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool DC fan open/close diff
+    address: 0x0089
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_cool_dcfan_open_close
+    value_type: U_WORD
+    min_value: 0.1
+    max_value: 5.0
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool DC fan close diff
+    address: 0x008A
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_cool_dcfan_close_diff
+    value_type: U_WORD
+    min_value: 0.1
+    max_value: 5.0
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool DC fan init speed
+    address: 0x008B
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_cool_dcfan_init
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Heat DC fan settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat DC fan max speed
+    address: 0x008C
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_heat_dcfan_max
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat DC fan min speed
+    address: 0x008D
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_heat_dcfan_min
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat DC fan low pressure
+    address: 0x008E
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_heat_dcfan_low_press
+    value_type: U_WORD
+    min_value: 1
+    max_value: 10
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat DC fan open/close diff
+    address: 0x008F
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_heat_dcfan_open_close
+    value_type: U_WORD
+    min_value: 0.1
+    max_value: 5.0
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat DC fan close diff
+    address: 0x0090
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_heat_dcfan_close_diff
+    value_type: U_WORD
+    min_value: 0.1
+    max_value: 5.0
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat DC fan init speed
+    address: 0x0091
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_heat_dcfan_init
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # DC fan adjustment settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan adjust period
+    address: 0x0092
+    unit_of_measurement: "s"
+    id: ${sprsun_device_prefix}_dcfan_adjust_period
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan adjust speed 1
+    address: 0x0093
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_dcfan_adjust_1
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan adjust speed 2
+    address: 0x0094
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_dcfan_adjust_2
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan adjust speed 3
+    address: 0x0095
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_dcfan_adjust_3
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan adjust speed 4
+    address: 0x0096
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_dcfan_adjust_4
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} DC fan adjust speed 5
+    address: 0x0097
+    unit_of_measurement: "RPM"
+    id: ${sprsun_device_prefix}_dcfan_adjust_5
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1000
+    lambda: 'return x * 10;'
+    write_lambda: 'return x / 10;'
+    step: 10
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Advanced system settings (selected high-priority ones)
+  # Cycle and protection settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Antifreeze cycle
+    address: 0x019F
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_antifreeze_cycle
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Three-way valve cycle
+    address: 0x01A0
+    unit_of_measurement: "h"
+    id: ${sprsun_device_prefix}_threeway_cycle
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Pump cycle in error
+    address: 0x01A1
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_pump_cycle_error
+    value_type: U_WORD
+    min_value: 1
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Comp frequency cycle
+    address: 0x01A2
+    unit_of_measurement: "s"
+    id: ${sprsun_device_prefix}_comp_freq_cycle
+    value_type: U_WORD
+    min_value: 20
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Air too low setpoint
+    address: 0x01A3
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_air_too_low_stp
+    value_type: S_WORD
+    min_value: -40
+    max_value: 0
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # G-series system settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G08 Comp delay
+    address: 0x0181
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_g08_comp_delay
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G06 Comp delay
+    address: 0x0182
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_g06_comp_delay
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G07 Hotwater heater extension
+    address: 0x0183
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_g07_hotwater_ext
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G05 Heating heater extension
+    address: 0x0184
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_g05_heating_ext
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G03 Start interval
+    address: 0x0185
+    unit_of_measurement: "min"
+    id: ${sprsun_device_prefix}_g03_start_interval
+    value_type: U_WORD
+    min_value: 1
+    max_value: 60
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G09 Enable switch
+    address: 0x0191
+    id: ${sprsun_device_prefix}_g09_enable_switch
+    value_type: U_WORD
+    min_value: 0
+    max_value: 1
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G10 Ambient temp switch setpoint
+    address: 0x0192
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_g10_ambtemp_switch
+    value_type: S_WORD
+    min_value: -30
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} G11 Ambient temp diff
+    address: 0x0193
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_g11_ambtemp_diff
+    value_type: U_WORD
+    min_value: 1
+    max_value: 20
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # F-series temperature and frequency limits
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F21 Comp freq scale factor
+    address: 0x018E
+    id: ${sprsun_device_prefix}_f21_comp_freq_scale
+    value_type: U_WORD
+    min_value: 1
+    max_value: 10
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F22 Comp freq diff
+    address: 0x018F
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_f22_comp_freq_diff
+    value_type: U_WORD
+    min_value: 1
+    max_value: 30
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F27 Limit freq temp diff
+    address: 0x0194
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_f27_limit_freq_temp_diff
+    value_type: U_WORD
+    min_value: 1
+    max_value: 20
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F28 Dec freq temp diff
+    address: 0x0195
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_f28_dec_freq_temp_diff
+    value_type: U_WORD
+    min_value: 1
+    max_value: 20
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F29 Limit freq outlet low
+    address: 0x0196
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_f29_limit_freq_outlet_low
+    value_type: S_WORD
+    min_value: 10
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F30 Dec freq outlet low
+    address: 0x0197
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_f30_dec_freq_outlet_low
+    value_type: S_WORD
+    min_value: 10
+    max_value: 50
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F31 Limit freq outlet high
+    address: 0x0198
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_f31_limit_freq_outlet_high
+    value_type: S_WORD
+    min_value: 30
+    max_value: 70
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} F32 Dec freq outlet high
+    address: 0x0199
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_f32_dec_freq_outlet_high
+    value_type: S_WORD
+    min_value: 30
+    max_value: 70
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Additional temperature offset and system settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} WT temp offset setpoint
+    address: 0x00D0
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_wt_temp_offset_stp
+    value_type: U_WORD
+    min_value: 30
+    max_value: 55
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Inlet temp offset setpoint
+    address: 0x00D1
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_inlet_temp_offset_stp
+    value_type: S_WORD
+    min_value: -10
+    max_value: 10
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Ambient temp offset setpoint
+    address: 0x00D2
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_ambient_temp_offset_stp
+    value_type: S_WORD
+    min_value: -10
+    max_value: 10
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Coil temp offset setpoint
+    address: 0x00D3
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_coil_temp_offset_stp
+    value_type: S_WORD
+    min_value: -10
+    max_value: 10
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  # Advanced system pressure and temperature settings
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Defrost fan high pressure
+    address: 0x01B0
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_defrost_fan_high_press
+    value_type: U_WORD
+    min_value: 10
+    max_value: 35
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} High pressure adjustment
+    address: 0x01B2
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_high_pressure_adj
+    value_type: S_WORD
+    min_value: -5
+    max_value: 5
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Low pressure adjustment
+    address: 0x01B3
+    unit_of_measurement: "bar"
+    id: ${sprsun_device_prefix}_low_pressure_adj
+    value_type: S_WORD
+    min_value: -5
+    max_value: 5
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Air too low diff
+    address: 0x01B4
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_air_too_low_diff
+    value_type: U_WORD
+    min_value: 1
+    max_value: 20
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} AV init outlet setpoint
+    address: 0x01B5
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_av_init_outlet_stp
+    value_type: U_WORD
+    min_value: 25
+    max_value: 45
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Outlet temp offset setpoint
+    address: 0x01B6
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_outlet_temp_offset_stp
+    value_type: U_WORD
+    min_value: 25
+    max_value: 70
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Outlet temp offset
+    address: 0x01B7
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_outlet_temp_offset
+    value_type: S_WORD
+    min_value: -10
+    max_value: 10
+    lambda: 'return x * 0.1;'
+    write_lambda: 'return x / 0.1;'
+    step: 0.1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Heat limit setpoint
+    address: 0x01B8
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_heat_limit_stp
+    value_type: U_WORD
+    min_value: 40
+    max_value: 70
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cool limit setpoint
+    address: 0x01B9
+    unit_of_measurement: "°C"
+    id: ${sprsun_device_prefix}_cool_limit_stp
+    value_type: U_WORD
+    min_value: 5
+    max_value: 25
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
+
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Oil return frequency
+    address: 0x01BB
+    unit_of_measurement: "Hz"
+    id: ${sprsun_device_prefix}_oil_return_freq
+    value_type: U_WORD
+    min_value: 30
+    max_value: 120
+    step: 1
+    mode: box
+    entity_category: config
+    skip_updates: 10
