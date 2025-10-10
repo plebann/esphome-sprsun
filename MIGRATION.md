@@ -27,7 +27,7 @@ Replace the local inclusion with Git integration:
 # NEW - Git package integration
 packages:
   sprsun_package:
-    url: https://github.com/plebann/sprsun-esphome-package
+    url: https://github.com/plebann/esphome-packages
     files: [packages/sprsun/complete.yaml]
     ref: main
     refresh: 1d
@@ -106,7 +106,7 @@ packages:
 ```yaml
 packages:
   sprsun_package:
-    url: https://github.com/plebann/sprsun-esphome-package
+    url: https://github.com/plebann/esphome-packages
     files: [packages/sprsun/complete.yaml]
     ref: main
     refresh: 1d
@@ -158,5 +158,5 @@ packages:
 If you encounter issues during migration:
 
 1. Check the [examples/](../examples/) directory for working configurations
-2. Open an issue at: https://github.com/plebann/sprsun-esphome-package/issues
+2. Open an issue at: https://github.com/plebann/esphome-packages/issues
 3. Include your configuration and error messages

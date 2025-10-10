@@ -4,7 +4,7 @@
 # Usage with ESPHome Git integration:
 # packages:
 #   sprsun_package:
-#     url: https://github.com/plebann/sprsun-esphome-package
+#     url: https://github.com/plebann/esphome-packages
 #     files: [packages/sprsun/complete.yaml]
 #     ref: main
 #     refresh: 1d
