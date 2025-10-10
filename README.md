@@ -1,7 +1,7 @@
 # SPRSUN Heat Pump ESPHome Package
 
 [![ESPHome](https://img.shields.io/badge/ESPHome-2024.6+-blue.svg)](https://esphome.io/)
-[![GitHub Actions](https://github.com/plebann/sprsun-esphome-package/workflows/ESPHome%20Validation/badge.svg)](https://github.com/plebann/sprsun-esphome-package/actions)
+[![GitHub Actions](https://github.com/plebann/esphome-packages/workflows/ESPHome%20Validation/badge.svg)](https://github.com/plebann/esphome-packages/actions)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
 A comprehensive ESPHome package for integrating SPRSUN heat pump units via Modbus RTU communication. This package provides monitoring, control, and diagnostics capabilities with full variable customization support.
@@ -15,21 +15,22 @@ Add the following to your ESPHome configuration:
 ```yaml
 packages:
   sprsun_package:
-    url: https://github.com/plebann/sprsun-esphome-package
-    files: [packages/sprsun/complete.yaml]
+    url: https://github.com/plebann/esphome-packages
+    files:
+      - path: packages/sprsun/complete.yaml
+        vars:
+          sprsun_device_prefix: "test"
+          sprsun_device_name: "TEST"
+          sprsun_uart_rx_pin: "GPIO14"
+          sprsun_uart_tx_pin: "GPIO15"
+          sprsun_uart_baud: "19200"
+          sprsun_uart_stop_bits: "2"
+          sprsun_modbus_address: "1"
+          sprsun_modbus_send_wait: "200ms"
+          sprsun_update_interval: "5s"
+          sprsun_setup_priority: "-10"
     ref: main
     refresh: 1d
-    vars:
-      sprsun_device_prefix: "sprsun"
-      sprsun_device_name: "SPRSUN Heat Pump"
-      sprsun_uart_rx_pin: "GPIO14"
-      sprsun_uart_tx_pin: "GPIO15"
-      sprsun_uart_baud: "19200"
-      sprsun_uart_stop_bits: "2"
-      sprsun_modbus_address: "1"
-      sprsun_modbus_send_wait: "200ms"
-      sprsun_update_interval: "5s"
-      sprsun_setup_priority: "-10"
 ```
 
 ### Alternative Installation Methods
@@ -37,14 +38,14 @@ packages:
 #### GitHub Shorthand (Simplest)
 ```yaml
 packages:
-  sprsun: github://plebann/sprsun-esphome-package/packages/sprsun/complete.yaml@main
+  sprsun: github://plebann/esphome-packages/packages/sprsun/complete.yaml@main
 ```
 
 #### Selective Component Loading
 ```yaml
 packages:
   sprsun_sensors:
-    url: https://github.com/plebann/sprsun-esphome-package
+    url: https://github.com/plebann/esphome-packages
     files: 
       - packages/sprsun/modbus_controller.yaml
       - packages/sprsun/sensors.yaml
@@ -133,8 +134,8 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## Support
 
-- **Issues**: Report bugs and feature requests via [GitHub Issues](https://github.com/plebann/sprsun-esphome-package/issues)
-- **Discussions**: Community support via [GitHub Discussions](https://github.com/plebann/sprsun-esphome-package/discussions)
+- **Issues**: Report bugs and feature requests via [GitHub Issues](https://github.com/plebann/esphome-packages/issues)
+- **Discussions**: Community support via [GitHub Discussions](https://github.com/plebann/esphome-packages/discussions)
 - **ESPHome**: Official documentation at [esphome.io](https://esphome.io/)
 
 ## Acknowledgments

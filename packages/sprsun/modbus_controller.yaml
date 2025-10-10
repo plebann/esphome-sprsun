@@ -18,7 +18,7 @@ modbus:
 # Modbus controller for SPRSUN heat pump communication
 modbus_controller:
   - id: ${sprsun_device_prefix}_pc
-    address: ${sprsun_modbus_address}
+    address: 0x0${sprsun_modbus_address}
     modbus_id: modbus_${sprsun_device_prefix}
     update_interval: ${sprsun_update_interval}
     setup_priority: ${sprsun_setup_priority}

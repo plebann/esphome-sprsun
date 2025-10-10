@@ -13,6 +13,16 @@ binary_sensor:
     address: 0x0003
     bitmask: 0x02
 
+  - platform: modbus_controller
+    modbus_controller_id: ${sprsun_device_prefix}_pc
+    name: ${sprsun_device_name} Cooling
+    id: ${sprsun_device_prefix}_cooling
+    entity_category: diagnostic
+    device_class: heat
+    register_type: holding
+    address: 0x0003
+    bitmask: 0x20
+
   # Defrost status binary sensor with counter automation
   - platform: modbus_controller
     modbus_controller_id: ${sprsun_device_prefix}_pc
