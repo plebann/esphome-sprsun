@@ -300,3 +300,80 @@ text_sensor:
         z.erase(z.length() - 2);
       }
       return {z};
+
+  # Model identification text mapping
+  - platform: template
+    name: ${sprsun_device_name} Model name
+    id: ${sprsun_device_prefix}_model_name
+    icon: mdi:heat-pump
+    entity_category: diagnostic
+    lambda: |-
+      int code = id(${sprsun_device_prefix}_model_code).state;
+      switch(code) {
+        case 1: return {"A102508"};
+        case 2: return {"A202508"};
+        case 3: return {"A103008"};
+        case 4: return {"A203008"};
+        case 5: return {"A104008"};
+        case 6: return {"A204008"};
+        case 7: return {"A105008"};
+        case 8: return {"A205008"};
+        case 9: return {"A106008"};
+        case 10: return {"A206008"};
+        default: return {"Unknown"};
+      }
+
+  # Timeband weekday name displays
+  - platform: template
+    name: ${sprsun_device_name} Timeband 1 day name
+    id: ${sprsun_device_prefix}_tb1_day_name
+    icon: mdi:calendar-text
+    entity_category: diagnostic
+    lambda: |-
+      int day = id(${sprsun_device_prefix}_tb1_weekday).state;
+      switch(day) {
+        case 0: return {"Sunday"};
+        case 1: return {"Monday"};
+        case 2: return {"Tuesday"};
+        case 3: return {"Wednesday"};
+        case 4: return {"Thursday"};
+        case 5: return {"Friday"};
+        case 6: return {"Saturday"};
+        default: return {"Unknown"};
+      }
+
+  - platform: template
+    name: ${sprsun_device_name} Timeband 2 day name
+    id: ${sprsun_device_prefix}_tb2_day_name
+    icon: mdi:calendar-text
+    entity_category: diagnostic
+    lambda: |-
+      int day = id(${sprsun_device_prefix}_tb2_weekday).state;
+      switch(day) {
+        case 0: return {"Sunday"};
+        case 1: return {"Monday"};
+        case 2: return {"Tuesday"};
+        case 3: return {"Wednesday"};
+        case 4: return {"Thursday"};
+        case 5: return {"Friday"};
+        case 6: return {"Saturday"};
+        default: return {"Unknown"};
+      }
+
+  - platform: template
+    name: ${sprsun_device_name} Timeband 3 day name
+    id: ${sprsun_device_prefix}_tb3_day_name
+    icon: mdi:calendar-text
+    entity_category: diagnostic
+    lambda: |-
+      int day = id(${sprsun_device_prefix}_tb3_weekday).state;
+      switch(day) {
+        case 0: return {"Sunday"};
+        case 1: return {"Monday"};
+        case 2: return {"Tuesday"};
+        case 3: return {"Wednesday"};
+        case 4: return {"Thursday"};
+        case 5: return {"Friday"};
+        case 6: return {"Saturday"};
+        default: return {"Unknown"};
+      }
